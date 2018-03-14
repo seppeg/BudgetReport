@@ -7,6 +7,8 @@ pipeline {
                 sh './gradlew clean testClasses'
                 sh './gradlew jar'
             }
+        }
+
         stage('Test') {
             parallel {
                 stage('Test camis-connection') {
@@ -14,7 +16,6 @@ pipeline {
                 }
             }
         }
-    }
 
     post {
         always {
