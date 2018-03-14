@@ -1,0 +1,3 @@
+FROM jenkins
+ENV JENKINS_OPTS --httpPort=10000
+EXPOSE 10000
