@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'echo $JAVA_HOME'
+                env.JAVA_HOME="${tool 'JDK9'}"
+                env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
                 sh 'java -version'
                 sh './gradlew clean testClasses'
                 sh './gradlew jar'
