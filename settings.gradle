@@ -1,0 +1,3 @@
+rootProject.name = 'BudgetReport'
+
+include 'camis-connection'
