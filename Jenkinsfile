@@ -13,7 +13,7 @@ pipeline {
             parallel {
                 stage('Test camis-connection') {
                     steps {
-                        sh './gradlew :camis-connection test'
+                        sh './gradlew :camis-connection:test'
                     }
                 }
             }
