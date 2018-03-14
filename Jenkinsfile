@@ -12,7 +12,9 @@ pipeline {
         stage('Test') {
             parallel {
                 stage('Test camis-connection') {
-                    sh './gradlew :camis-connection test'
+                    steps {
+                        sh './gradlew :camis-connection test'
+                    }
                 }
             }
         }
