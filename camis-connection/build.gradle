@@ -15,7 +15,7 @@ repositories {
 test {
     useJUnitPlatform {
         excludeTags 'slow'
-        includeEngines 'junit-jupiter', 'junit-vintage'
+        includeEngines 'junit-jupiter'
     }
 
     failFast = false
@@ -26,4 +26,5 @@ dependencies {
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.1.0'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.assertj:assertj-core:3.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
 }
