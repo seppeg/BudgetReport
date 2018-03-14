@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo '$JAVA_HOME'
-                echo 'java -version'
+                sh 'echo $JAVA_HOME'
+                sh 'java -version'
                 sh './gradlew clean testClasses'
                 sh './gradlew jar'
             }
