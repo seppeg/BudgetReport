@@ -1,11 +1,13 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'JDK9'
+    }
+
     stages {
         stage('Build') {
             steps {
-                env.JAVA_HOME="${tool 'JDK9'}"
-                env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
                 sh 'java -version'
                 sh './gradlew clean testClasses'
                 sh './gradlew jar'
