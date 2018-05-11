@@ -31,4 +31,4 @@ build
 out
 
 #sensitive files
-*.env
+credentials.env
