@@ -2,3 +2,5 @@ rootProject.name = 'BudgetReport'
 
 include 'camis-connection'
 include 'project'
+include 'booking'
+
