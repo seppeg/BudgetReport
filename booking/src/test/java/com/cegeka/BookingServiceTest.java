@@ -1,4 +1,4 @@
-package cegeka;
+package com.cegeka;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.stream.test.binder.MessageCollector;
 import org.springframework.messaging.Message;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.concurrent.BlockingQueue;
@@ -20,6 +21,7 @@ import static org.springframework.cloud.stream.test.matcher.MessageQueueMatcher.
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
+@DirtiesContext
 class BookingServiceTest {
 
     @Autowired

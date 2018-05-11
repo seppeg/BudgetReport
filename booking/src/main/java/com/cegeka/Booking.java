@@ -1,4 +1,4 @@
-package cegeka;
+package com.cegeka;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -1,4 +1,4 @@
-package cegeka;
+package com.cegeka;
 
 import lombok.Value;
 
