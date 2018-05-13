@@ -12,17 +12,10 @@ repositories {
     mavenCentral()
 }
 
-test {
-    useJUnitPlatform {
-        excludeTags 'slow'
-        includeEngines 'junit-jupiter'
-    }
-
-    failFast = false
-}
-
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-batch'
+
+    test.useJUnitPlatform()
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.1.0'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.assertj:assertj-core:3.9.0'
