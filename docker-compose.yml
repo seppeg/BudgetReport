@@ -1,0 +1,84 @@
+version: '3'
+
+services:
+  #kafka/zookeeper for storing events
+  zookeeper:
+    image: wurstmeister/zookeeper:3.4.6
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka:1.0.0
+    links:
+     - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "booking:1:1" #todo :compact with messagekey=workorder+medewerker
+      KAFKA_LOG_RETENTION_MS: -1 #keep messages forever
+
+  #databases
+  bookingdb:
+    image: postgres:10.3
+    ports:
+     - "5001:5432"
+    env_file:
+      - credentials.env
+    environment:
+      - POSTGRES_DB=bookingdb
+      - PGDATA=/var/lib/postgresql/data
+    volumes:
+      - booking_data:/var/lib/postgresql/data
+
+  #reverse proxy & load balancer
+  traefik:
+    image: traefik
+    command: --api --docker --docker.domain=docker.localhost
+    ports:
+     - "80:80"
+     - "443:443"
+     - "8080:8080" # web ui
+    env_file:
+      - .env
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+
+  #microservices
+  booking:
+    build: booking
+    container_name: booking
+    links:
+     - kafka
+     - bookingdb
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
+      SPRING_DATASOURCE_DRIVERCLASSNAME: org.postgresql.Driver
+      SPRING_DATASOURCE_URL: jdbc:postgresql://bookingdb:5432/bookingdb
+      SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+    env_file:
+     - credentials.env
+    labels:
+     - "traefik.backend=booking"
+     - "traefik.frontend.rule=Path:/booking"
+
+  example:
+    build: exampleprojectforreadingfromkafka
+    container_name: example
+    links:
+     - kafka
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    labels:
+     - "traefik.backend=example"
+     - "traefik.frontend.rule=Path:/example"
+
+  #testing
+  whoami: #for debugging and testing loadbalancing
+    image: emilevauge/whoami
+    labels:
+     - "traefik.frontend.rule=Path:/whoami"
+
+
+volumes:
+  booking_data:
