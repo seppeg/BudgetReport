@@ -50,6 +50,11 @@ services:
     links:
      - kafka
      - bookingdb
+#     - fluentd
+#    logging:
+#      driver: "fluentd"
+#      options:
+#        tag: booking
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
@@ -61,6 +66,29 @@ services:
     labels:
      - "traefik.backend=booking"
      - "traefik.frontend.rule=Path:/booking"
+
+  #EFK stack
+#  fluentd:
+#    build: ./fluentd
+#    links:
+#      - "elasticsearch"
+#    ports:
+#      - "24224:24224"
+#      - "24224:24224/udp"
+#
+#  elasticsearch:
+#    image: elasticsearch
+#    expose:
+#      - 9200
+#    ports:
+#      - "9200:9200"
+#
+#  kibana:
+#    image: kibana
+#    links:
+#      - "elasticsearch"
+#    ports:
+#      - "5601:5601"
 
   example:
     build: exampleprojectforreadingfromkafka
