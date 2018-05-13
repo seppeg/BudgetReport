@@ -33,7 +33,7 @@ services:
   #reverse proxy & load balancer
   traefik:
     image: traefik
-    command: --api --docker --docker.domain=docker.localhost
+    command: --api --docker --docker.domain=localhost
     ports:
      - "80:80"
      - "443:443"
@@ -65,7 +65,7 @@ services:
      - credentials.env
     labels:
      - "traefik.backend=booking"
-     - "traefik.frontend.rule=Path:/booking"
+     - "traefik.frontend.rule=Host:booking.localhost"
 
   #EFK stack
 #  fluentd:
@@ -99,13 +99,13 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     labels:
      - "traefik.backend=example"
-     - "traefik.frontend.rule=Path:/example"
+     - "traefik.frontend.rule=Host:example.localhost"
 
   #testing
   whoami: #for debugging and testing loadbalancing
     image: emilevauge/whoami
     labels:
-     - "traefik.frontend.rule=Path:/whoami"
+     - "traefik.frontend.rule=Host:whoami.localhost"
 
 
 volumes:

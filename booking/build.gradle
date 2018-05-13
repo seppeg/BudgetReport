@@ -56,6 +56,10 @@ dependencies {
     compile "org.apache.logging.log4j:log4j-core"
     compile "org.apache.logging.log4j:log4j-jcl"
 
+    //actuator
+    compile 'org.springframework.boot:spring-boot-actuator-autoconfigure:2.0.2.RELEASE'
+    compile 'io.micrometer:micrometer-core:1.0.4'
+
     //cloud stream
     compile "org.springframework.cloud:spring-cloud-stream-binder-kafka:${springCloudStreamVersion}"
     compile "org.springframework.cloud:spring-cloud-stream:${springCloudStreamVersion}"
