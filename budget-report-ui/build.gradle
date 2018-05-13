@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+    id 'com.moowork.node' version '1.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+task ngBuild(type: NpmTask) {
+    group = 'budget-report-ui'
+    description = 'Build Angular application'
+    args = ['run', 'build']
+}
+
+ngBuild.dependsOn npmInstall

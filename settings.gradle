@@ -1,4 +1,3 @@
 rootProject.name = 'BudgetReport'
 
-include 'camis-connection'
-include 'project'
+include 'camis-connection','project', 'employee', 'budget-report-ui'
