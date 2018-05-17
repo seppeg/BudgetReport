@@ -35,7 +35,7 @@ class CamisRepositoryTest {
 
     @Test
     public void testDataAccess() {
-        List<CamisBooking> actual = new CamisRepository(db, Lists.newArrayList("COCFL871.004","COCFL874.004","COCFL860.004")).findActualsFor();
+        List<CamisBooking> actual = new CamisRepository(db, Lists.newArrayList("COCFL871.004","COCFL874.004","COCFL860.004")).findActualsFor(201801);
 
         Assertions.assertThat(actual).usingRecursiveFieldByFieldElementComparator()
                 .containsOnly(booking()

@@ -1,3 +1,6 @@
 rootProject.name = 'BudgetReport'
 
-include 'camis-connection','project', 'employee', 'budget-report-ui','booking', 'exampleprojectforreadingfromkafka'
+include 'camis-connection','project', 'employee', 'budget-report-ui',
+        'booking', 'exampleprojectforreadingfromkafka',
+        'timeprovider-util'
+

@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.9
+targetCompatibility = 1.9
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform {
+        excludeTags 'slow'
+        includeEngines 'junit-jupiter'
+    }
+
+    failFast = false
+}
+
+dependencies {
+}
