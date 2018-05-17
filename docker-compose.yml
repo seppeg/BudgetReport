@@ -23,12 +23,24 @@ services:
     ports:
      - "5001:5432"
     env_file:
-      - credentials.env
+      - credentials_booking.env
     environment:
       - POSTGRES_DB=bookingdb
       - PGDATA=/var/lib/postgresql/data
     volumes:
       - booking_data:/var/lib/postgresql/data
+
+  projectdb:
+      image: postgres:10.3
+      ports:
+       - "5002:5432"
+      env_file:
+        - credentials_project.env
+      environment:
+        - POSTGRES_DB=projectdb
+        - PGDATA=/var/lib/postgresql/data
+      volumes:
+        - project_data:/var/lib/postgresql/data
 
   #reverse proxy & load balancer
   traefik:
@@ -62,10 +74,28 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://bookingdb:5432/bookingdb
       SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.PostgreSQLDialect
     env_file:
-     - credentials.env
+     - credentials_booking.env
     labels:
      - "traefik.backend=booking"
-     - "traefik.frontend.rule=Host:booking.localhost"
+     - "traefik.frontend.rule=Path:/booking"
+
+  project:
+    build: project
+    container_name: project
+    links:
+     - kafka
+     - projectdb
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
+      SPRING_DATASOURCE_DRIVERCLASSNAME: org.postgresql.Driver
+      SPRING_DATASOURCE_URL: jdbc:postgresql://projectdb:5432/projectdb
+      SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+    env_file:
+     - credentials_project.env
+    labels:
+     - "traefik.backend=project"
+     - "traefik.frontend.rule=Path:/project"
 
   #EFK stack
 #  fluentd:
@@ -110,3 +140,4 @@ services:
 
 volumes:
   booking_data:
+  project_data:
