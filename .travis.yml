@@ -1,19 +1,22 @@
 language: java
-
 jdk:
-  - oraclejdk9
-
+- oraclejdk9
 os:
-  - linux
-
+- linux
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
 script:
-  - ./gradlew assemble
-  - ./gradlew check
+- "./gradlew assemble"
+- "./gradlew check"
+notifications:
+  slack:
+    on_success: always
+    on_failure: always
+    rooms:
+      secure: kUojJF2r07NFPwaojadLi6XKFHIUu8BAggweAFj4ed9ny5QE0l4a12gI2ruwxgEG7yeYX2K+F30NsPZKTJA+8rsUIob5suyG1aWr/6gKvPriXlGeDvJ/yXKJqT6OI7SEEIIZTDnFiwDxiB+O0/W/EUQnffwKubTd+CAbXUrKpZnLu7uuhyCJ9Y7EWgFf5pYbc2wE1KFKd1bWVmc1r0FOCWbWv/VbHHNlTfqOFRFSMzhFlFgsxXFpvYESg/TB6IaGkJSpuC+DYuZcrcVEMFqIblNmC8PE0QoTFhg8cHkUs0Qq1AVbUz+F0yZ4oLgWG4f7LZdmPENtBXOYdpDvOJq3EyRf5Ko8SbGUTBBFTzzCI0SvE8l+WJ4BNCbyblMlseCTSQ7N6UjZC0fgarQVGC3S25dV4UF2SE7sXmqrnyZR4zemn0sDJjTRWxXbQQMpuEdW+pUmjz++n/XKQ9Oi+ukqdp/Msb7aWaE2zxny5Fz6pe30UhXDVLehlcAJXzIs7sGdCZ6Uq8+w7vJseTY7YkmwZ81/Yy5YU9a1DRxH2Do/DCx7SUzh9DS0Jch76zzWTRX34eyuIjKm4NIZ1nPMPLCRB88hI0YchN0WB5EvKPlMIsTABiZPFeLP+GVl4xQF2Y1fsMmv9YZ2Bf4QkN/EdQmc1zerTuyCuv9rCPYJS5XqslU=
+  email: false
