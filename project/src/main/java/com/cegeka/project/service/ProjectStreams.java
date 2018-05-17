@@ -5,7 +5,7 @@ import org.springframework.messaging.SubscribableChannel;
 
 public interface ProjectStreams {
 
-    String INPUT = "project-in";
+    String INPUT = "booking-in";
 
     @Input(INPUT)
     SubscribableChannel inboundProjects();

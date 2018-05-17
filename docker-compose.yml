@@ -89,7 +89,7 @@ services:
      - booking/credentials_booking.env
     labels:
      - "traefik.backend=booking"
-     - "traefik.frontend.rule=Path:/booking"
+     - "traefik.frontend.rule=Host:booking.localhost"
 
   project:
     build: project
@@ -107,7 +107,7 @@ services:
      - project/credentials_project.env
     labels:
      - "traefik.backend=project"
-     - "traefik.frontend.rule=Path:/project"
+     - "traefik.frontend.rule=Host:project.localhost"
 
   employee:
      build: employee

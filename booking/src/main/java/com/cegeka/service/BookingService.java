@@ -1,10 +1,10 @@
 package com.cegeka.service;
 
-import com.cegeka.BookingCreated;
 import com.cegeka.BookingStreams;
 import com.cegeka.api.BookingR;
 import com.cegeka.domain.Booking;
 import com.cegeka.domain.BookingRepository;
+import com.cegeka.event.BookingCreated;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.Message;
@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
-import static com.cegeka.BookingCreatedBuilder.createBooking;
+import static com.cegeka.event.BookingCreatedBuilder.createBooking;
 
 @Service
 @AllArgsConstructor

@@ -1,9 +1,9 @@
-package com.cegeka;
+package com.cegeka.project.service;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-public final class BookingCreatedBuilder {
+public final class ProjectTOTestBuilder {
     private UUID id;
     private String workorder;
     private LocalDate date;
@@ -11,39 +11,39 @@ public final class BookingCreatedBuilder {
     private double hours;
     private String employee;
 
-    private BookingCreatedBuilder() {
+    private ProjectTOTestBuilder() {
     }
 
-    public static BookingCreatedBuilder createBooking() {
-        return new BookingCreatedBuilder();
+    public static ProjectTOTestBuilder projectTO() {
+        return new ProjectTOTestBuilder();
     }
 
-    public BookingCreatedBuilder id(UUID id) {
+    public ProjectTOTestBuilder id(UUID id) {
         this.id = id;
         return this;
     }
 
-    public BookingCreatedBuilder workorder(String workorder) {
+    public ProjectTOTestBuilder workorder(String workorder) {
         this.workorder = workorder;
         return this;
     }
 
-    public BookingCreatedBuilder date(LocalDate date) {
+    public ProjectTOTestBuilder date(LocalDate date) {
         this.date = date;
         return this;
     }
 
-    public BookingCreatedBuilder description(String description) {
+    public ProjectTOTestBuilder description(String description) {
         this.description = description;
         return this;
     }
 
-    public BookingCreatedBuilder hours(double hours) {
+    public ProjectTOTestBuilder hours(double hours) {
         this.hours = hours;
         return this;
     }
 
-    public BookingCreatedBuilder employee(String employee) {
+    public ProjectTOTestBuilder employee(String employee) {
         this.employee = employee;
         return this;
     }

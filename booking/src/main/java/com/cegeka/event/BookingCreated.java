@@ -1,4 +1,4 @@
-package com.cegeka;
+package com.cegeka.event;
 
 import lombok.Value;
 

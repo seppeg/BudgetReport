@@ -1,6 +1,6 @@
 package com.cegeka.domain;
 
-import com.cegeka.BookingCreated;
+import com.cegeka.event.BookingCreated;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
