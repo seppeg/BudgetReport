@@ -42,6 +42,18 @@ services:
       volumes:
         - project_data:/var/lib/postgresql/data
 
+  employeedb:
+      image: postgres:10.3
+      ports:
+       - "5003:5432"
+      env_file:
+        - credentials_employee.env
+      environment:
+        - POSTGRES_DB=employeedb
+        - PGDATA=/var/lib/postgresql/data
+      volumes:
+        - employee_data:/var/lib/postgresql/data
+
   #reverse proxy & load balancer
   traefik:
     image: traefik
@@ -97,6 +109,24 @@ services:
      - "traefik.backend=project"
      - "traefik.frontend.rule=Path:/project"
 
+  employee:
+     build: employee
+     container_name: employee
+     links:
+      - kafka
+      - employeedb
+     environment:
+       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+       SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
+       SPRING_DATASOURCE_DRIVERCLASSNAME: org.postgresql.Driver
+       SPRING_DATASOURCE_URL: jdbc:postgresql://employeedb:5432/employeedb
+       SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+     env_file:
+      - credentials_employee.env
+     labels:
+      - "traefik.backend=employee"
+      - "traefik.frontend.rule=Path:/employee"
+
   #EFK stack
 #  fluentd:
 #    build: ./fluentd
@@ -141,3 +171,4 @@ services:
 volumes:
   booking_data:
   project_data:
+  employee_data:
