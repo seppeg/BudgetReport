@@ -5,6 +5,10 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.4.RELEASE'
 }
 
+ext{
+    springCloudStreamVersion = '2.0.0.RELEASE'
+}
+
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.9
@@ -35,6 +39,12 @@ dependencies {
     compile 'com.zaxxer:HikariCP'
     compile 'org.postgresql:postgresql'
     testCompile 'com.h2database:h2'
+
+    //cloud stream
+    compile "org.springframework.cloud:spring-cloud-stream-binder-kafka:${springCloudStreamVersion}"
+    compile "org.springframework.cloud:spring-cloud-stream:${springCloudStreamVersion}"
+    testCompile "org.springframework.cloud:spring-cloud-stream-test-support:${springCloudStreamVersion}"
+
 
     annotationProcessor 'org.projectlombok:lombok'
     compile 'org.projectlombok:lombok'
