@@ -1,4 +1,11 @@
 language: java
 
-./gradlew assemble
-./gradlew check
+jdk:
+  - oraclejdk9
+
+os:
+  - linux
+
+script:
+  - ./gradlew assemble
+  - ./gradlew check
