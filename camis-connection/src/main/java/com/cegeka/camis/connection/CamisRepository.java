@@ -33,10 +33,10 @@ public class CamisRepository {
                 .collect(Collectors.joining(","));
     }
 
-    public List<CamisBooking> findActualsFor() {
+    public List<CamisBooking> findActualsFor(int period) {
         String sql = "SELECT Werkorder, Datum, Commentaar, Uren, Medewerker_ID " +
                 "FROM dbo.zrapuur1 " +
-                "WHERE Periode >= 201801 " +
+                "WHERE Periode >=" + period + " "+
                 "AND Werkorder in ( " +
                 getWorkorders()
                 + " )";
