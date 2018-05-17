@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
-import static com.cegeka.BookingCreated.createBooking;
+import static com.cegeka.BookingCreatedBuilder.createBooking;
 
 @Service
 @AllArgsConstructor
