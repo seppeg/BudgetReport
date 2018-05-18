@@ -1,0 +1,16 @@
+h2{
+    font-family: 'Special Elite', cursive;
+}
+
+.projects > div {
+    padding: 0;
+    float: left;
+}
+
+.projects p {
+    text-align: center;
+}
+
+.projects {
+    font-family: 'Special Elite', cursive;
+}

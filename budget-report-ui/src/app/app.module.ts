@@ -32,7 +32,7 @@ import {MessagesComponent} from './messages/messages.component';
         FormsModule,
         HttpClientModule,
         HttpClientInMemoryWebApiModule.forRoot(
-             InMemoryDataService
+            InMemoryDataService
         ),
         BrowserAnimationsModule,
         routing,

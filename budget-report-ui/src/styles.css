@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Cabin+Sketch|VT323');
+@import url('https://fonts.googleapis.com/css?family=Cabin+Sketch|Special+Elite|Roboto+Mono');
 
 
-/*font-family: 'VT323', monospace;*/
+/*font-family: 'Special Elite', cursive;*/
 /*font-family: 'Cabin Sketch', cursive;*/
 
 body {
@@ -35,7 +35,6 @@ mwl-gauge > .gauge > .value {
 }
 mwl-gauge > .gauge > .value-text {
     fill: rgb(193, 188, 46);
-    font-family: 'VT323', monospace;
-    /*font-weight: bold;*/
-    font-size: 2em;
+    font-family: 'Roboto Mono', cursive;
+    font-size: 1em;
 }
