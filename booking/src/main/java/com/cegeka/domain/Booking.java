@@ -1,13 +1,18 @@
 package com.cegeka.domain;
 
 import com.cegeka.event.BookingCreated;
+import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Getter
+@ToString
 public class Booking {
 
     @Id
@@ -31,7 +36,17 @@ public class Booking {
         this.hours = bookingCreated.getHours();
     }
 
-    public UUID getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Booking)) return false;
+        Booking booking = (Booking) o;
+        return Objects.equals(id, booking.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
     }
 }

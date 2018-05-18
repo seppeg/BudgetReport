@@ -1,4 +1,4 @@
-package com.cegeka.project.service;
+package com.cegeka.project.event;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -14,7 +14,7 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
-public class BookingCreated {
+public class BookingDeleted implements BookingEvent {
 
     private UUID id;
     private String workorder;
@@ -25,6 +25,6 @@ public class BookingCreated {
     private String employee;
 
 
-    public BookingCreated() {
+    public BookingDeleted() {
     }
 }

@@ -1,4 +1,4 @@
-package com.cegeka.project.service;
+package com.cegeka.project.event;
 
 import java.time.LocalDate;
 import java.util.UUID;

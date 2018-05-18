@@ -1,6 +1,7 @@
 package com.cegeka;
 
 import com.cegeka.api.BookingR;
+import com.cegeka.domain.Booking;
 import com.cegeka.domain.BookingRepository;
 import com.cegeka.service.BookingService;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,9 +20,11 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import static com.cegeka.api.BookingR.booking;
+import static com.cegeka.api.BookingRTestBuilder.booking;
+import static com.cegeka.event.BookingCreatedBuilder.createBooking;
 import static java.util.Collections.emptyList;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 //import static org.hamcrest.MatcherAssert.assertThat;
 //import static org.hamcrest.core.Is.is;
@@ -45,7 +48,7 @@ class BookingServiceTest {
     @BeforeEach
     void setUp() {
         bookingService = new BookingService(bookingStreams, bookingRepository);
-        when(bookingRepository.findAll()).thenReturn(emptyList());
+        when(bookingRepository.findByDateAfter(any())).thenReturn(emptyList());
     }
 
     @Test
@@ -62,5 +65,42 @@ class BookingServiceTest {
         BlockingQueue<Message<?>> messages = collector.forChannel(bookingStreams.outboundBookings());
         messages.poll(5000, TimeUnit.SECONDS);
         //TODO verify payload, problem: generated UUID different every time
+    }
+
+    @Test
+    void createBooking_onlyRaisesCreatedEventWhenNewBooking() throws InterruptedException {
+        Booking booking = new Booking(createBooking()
+                .date(LocalDate.now())
+                .description("test")
+                .employee("1123")
+                .hours(1)
+                .workorder("workorder")
+                .build());
+        when(bookingRepository.findByDateAfter(any())).thenReturn(List.of(booking));
+        BookingR bookingR = booking()
+                .date(LocalDate.now())
+                .description("test")
+                .employee("1123")
+                .hours(1)
+                .workorder("workorder")
+                .build();
+        bookingService.processBookingData(List.of(bookingR));
+
+        verify(bookingRepository, times(0)).save(any());
+    }
+
+    @Test
+    void createBooking_bookingRemoved() throws InterruptedException {
+        Booking booking = new Booking(createBooking()
+                .date(LocalDate.now())
+                .description("test")
+                .employee("1123")
+                .hours(1)
+                .workorder("workorder")
+                .build());
+        when(bookingRepository.findByDateAfter(any())).thenReturn(List.of(booking));
+        bookingService.processBookingData(emptyList());
+
+        verify(bookingRepository).delete(any());
     }
 }

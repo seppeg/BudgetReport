@@ -2,15 +2,13 @@ package com.cegeka.project.service;
 
 import com.cegeka.project.domain.Project;
 import com.cegeka.project.domain.ProjectRepository;
-import com.cegeka.project.domain.ProjectTestBuilder;
+import com.cegeka.project.event.BookingDeletedTestBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
 
 import static com.cegeka.project.domain.ProjectTestBuilder.project;
 import static com.cegeka.project.service.BookingCreatedTestBuilder.bookingCreated;

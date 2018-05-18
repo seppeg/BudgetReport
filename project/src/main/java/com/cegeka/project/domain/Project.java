@@ -29,6 +29,10 @@ public class Project {
         this.hoursSpent += hoursSpent;
     }
 
+    public void subtractHoursSpent(double hoursSpent) {
+        this.hoursSpent -= hoursSpent;
+    }
+
     public double getBudget() {
         return budget;
     }
