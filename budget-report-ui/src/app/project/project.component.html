@@ -1,0 +1,19 @@
+
+
+<h2>Projects</h2>
+<ul class="projects">
+  <li *ngFor="let project of projects">
+    {{project.description}}
+    {{project.hoursSpent}} / {{project.budget}}
+    <mwl-gauge
+            [max]="project.budget"
+            [dialStartAngle]="-90"
+            [dialEndAngle]="-90.001"
+            [value]="project.hoursSpent"
+            [animated]="true"
+            [animationDuration]="1.5">
+    </mwl-gauge>
+
+  </li>
+</ul>
+

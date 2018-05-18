@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin+Sketch|VT323');
+
+
+/*font-family: 'VT323', monospace;*/
+/*font-family: 'Cabin Sketch', cursive;*/
+
+body {
+    background-color: #090909;
+    color: #edeeef;
+}
+
+h1{
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 4em;
+}
+
+
+/*gauge*/
+mwl-gauge {
+    width: 200px;
+    height: 200px;
+    display: block;
+    padding: 10px;
+}
+mwl-gauge > .gauge > .dial {
+    stroke: #999;
+    stroke-width: 10;
+    fill: rgba(0,0,0,0);
+}
+mwl-gauge > .gauge > .value {
+    stroke: rgba(33, 150, 10);
+    stroke-width: 10;
+    fill: rgba(0,0,0,0);
+    stroke-dasharray: 25 2;
+}
+mwl-gauge > .gauge > .value-text {
+    fill: rgb(193, 188, 46);
+    font-family: 'VT323', monospace;
+    /*font-weight: bold;*/
+    font-size: 2em;
+}
