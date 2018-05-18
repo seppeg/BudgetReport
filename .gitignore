@@ -33,3 +33,6 @@ out
 #sensitive files
 credentials*.env
 *prd.properties
+
+#angular
+*node_modules
