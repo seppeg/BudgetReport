@@ -12,6 +12,26 @@ public class CamisBooking {
     private double hours;
     private String employee;
 
+    public String getWorkorder() {
+        return workorder;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getHours() {
+        return hours;
+    }
+
+    public String getEmployee() {
+        return employee;
+    }
+
     @Override
     public String toString() {
         return "CamisBooking{" +

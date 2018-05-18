@@ -68,6 +68,15 @@ services:
      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
 
   #microservices
+#  camis:
+#    build: camis-connection
+#    container_name: camis
+#    env_file:
+#     - camis-connection/credentials_camis-connection.env
+#    labels:
+#     - "traefik.backend=camis"
+#     - "traefik.frontend.rule=Host:camis.localhost"
+
   booking:
     build: booking
     container_name: booking
@@ -90,6 +99,7 @@ services:
     labels:
      - "traefik.backend=booking"
      - "traefik.frontend.rule=Host:booking.localhost"
+
 
   project:
     build: project

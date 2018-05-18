@@ -1,7 +1,5 @@
-package com.cegeka.camis;
+package com.cegeka.camis.booking;
 
-import com.cegeka.camis.booking.BookingConnection;
-import com.cegeka.camis.booking.CamisBooking;
 import com.cegeka.camis.connection.CamisRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ScheduleTaskTest {
+class BookingServiceTest {
 
     @Mock
     private CamisRepository camisRepository;
@@ -27,7 +25,7 @@ class ScheduleTaskTest {
     private BookingConnection bookingConnection;
 
     @InjectMocks
-    private ScheduleTask scheduleTask;
+    private BookingService bookingService;
 
     @Test
     void updateBookings() {
@@ -35,7 +33,7 @@ class ScheduleTaskTest {
         freezeTime(of(2018, 4,2,10,10,10));
         when(camisRepository.findActualsFor(201801)).thenReturn(expected);
 
-        scheduleTask.updateBookings();
+        bookingService.updateBookings();
 
         verify(bookingConnection).sendDataToBookingDomain(expected);
     }

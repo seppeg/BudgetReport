@@ -1,6 +1,5 @@
-package com.cegeka.camis;
+package com.cegeka.camis.booking;
 
-import com.cegeka.camis.booking.BookingConnection;
 import com.cegeka.camis.connection.CamisRepository;
 import com.cegeka.timeprovider.Timeprovider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +12,16 @@ import java.time.temporal.WeekFields;
 import java.util.Locale;
 
 @Component
-public class ScheduleTask {
-
+public class BookingService {
     private CamisRepository camisRepository;
     private BookingConnection bookingConnection;
 
     @Autowired
-    ScheduleTask(CamisRepository camisRepository, BookingConnection bookingConnection){
+    BookingService(CamisRepository camisRepository, BookingConnection bookingConnection){
         this.camisRepository = camisRepository;
         this.bookingConnection = bookingConnection;
     }
 
-    @Scheduled(cron = "0 10,18 * * *")
     public void updateBookings() {
         bookingConnection.sendDataToBookingDomain(camisRepository.findActualsFor(createPeriod()));
     }

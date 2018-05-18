@@ -61,11 +61,11 @@ public class CamisRepository {
 
         private CamisBooking rsItemToCamisBooking(ResultSet rs) throws SQLException {
             return booking()
-                    .workorder(rs.getNString("Werkorder"))
+                    .workorder(rs.getString("Werkorder"))
                     .date(rs.getDate("Datum"))
-                    .description(rs.getNString("Commentaar"))
+                    .description(rs.getString("Commentaar"))
                     .hours(rs.getBigDecimal("Uren"))
-                    .employee(rs.getNString("Medewerker_ID"))
+                    .employee(rs.getString("Medewerker_ID"))
                     .build();
         }
     }

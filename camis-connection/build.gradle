@@ -5,6 +5,8 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.4.RELEASE'
 }
 
+version '1.0-SNAPSHOT'
+
 sourceCompatibility=1.9
 targetCompatibility=1.9
 
@@ -13,7 +15,12 @@ repositories {
 }
 
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-batch'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-webflux'
+    compile 'com.microsoft.sqlserver:mssql-jdbc:6.4.0.jre9'
+    compile 'org.springframework.boot:spring-boot-starter-jdbc'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
+
     compile project (':timeprovider-util')
 
     test.useJUnitPlatform()
