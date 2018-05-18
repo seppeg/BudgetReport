@@ -14,7 +14,7 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: "booking:1:1" #todo :compact with messagekey=workorder+medewerker
+      KAFKA_CREATE_TOPICS: "booking:1:1,topic:1:1"
       KAFKA_LOG_RETENTION_MS: -1 #keep messages forever
 
   #databases

@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.cegeka.project.domain.ProjectTestBuilder.project;
-import static com.cegeka.project.service.BookingCreatedTestBuilder.bookingCreated;
+import static com.cegeka.project.event.BookingCreatedTestBuilder.bookingCreated;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,9 +25,12 @@ class ProjectServiceTest {
     @Mock
     private ProjectRepository projectRepository;
 
+    @Mock
+    private ProjectStreams projectStreams;
+
     @BeforeEach
     void setUp() {
-        projectService = new ProjectService(projectRepository);
+        projectService = new ProjectService(projectRepository, projectStreams);
     }
 
     @Test

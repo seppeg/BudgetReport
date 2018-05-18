@@ -1,6 +1,4 @@
-package com.cegeka.project.service;
-
-import com.cegeka.project.event.BookingCreated;
+package com.cegeka.project.event;
 
 import java.time.LocalDate;
 import java.util.UUID;

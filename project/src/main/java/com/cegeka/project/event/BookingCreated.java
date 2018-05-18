@@ -2,10 +2,7 @@ package com.cegeka.project.event;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -14,6 +11,7 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
 public class BookingCreated implements BookingEvent {
 
     private UUID id;
@@ -24,7 +22,4 @@ public class BookingCreated implements BookingEvent {
     private double hours;
     private String employee;
 
-
-    public BookingCreated() {
-    }
 }

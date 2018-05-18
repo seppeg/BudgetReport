@@ -71,6 +71,7 @@ public class BookingService {
     }
 
     private void raiseEvent(Object event) {
+        log.info("Raising event "+event);
         MessageChannel messageChannel = bookingStreams.outboundBookings();
         Message<Object> message = MessageBuilder.withPayload(event).setHeader("type", event.getClass().getSimpleName()).build();
         messageChannel.send(message);

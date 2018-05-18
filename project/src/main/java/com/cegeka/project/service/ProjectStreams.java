@@ -1,6 +1,8 @@
 package com.cegeka.project.service;
 
 import org.springframework.cloud.stream.annotation.Input;
+import org.springframework.cloud.stream.annotation.Output;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.SubscribableChannel;
 
 public interface ProjectStreams {
@@ -9,4 +11,9 @@ public interface ProjectStreams {
 
     @Input(INPUT)
     SubscribableChannel inboundProjects();
+
+    String OUTPUT = "project-out";
+
+    @Output(OUTPUT)
+    MessageChannel outboundProjects();
 }
