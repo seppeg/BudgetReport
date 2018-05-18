@@ -32,3 +32,4 @@ out
 
 #sensitive files
 credentials*.env
+*prd.properties
