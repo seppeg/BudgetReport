@@ -14,7 +14,6 @@ import static com.cegeka.project.service.BookingCreatedTestBuilder.bookingCreate
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,7 +31,7 @@ class ProjectServiceTest {
     }
 
     @Test
-    void updateHoursSpent() throws InvalidWorkOrderException {
+    void updateHoursSpent() {
         Project project = project()
                 .hoursSpent(0)
                 .build();
@@ -48,7 +47,7 @@ class ProjectServiceTest {
     }
 
     @Test
-    void removeHoursSpent() throws InvalidWorkOrderException {
+    void removeHoursSpent() {
         Project project = project()
                 .hoursSpent(10)
                 .build();
@@ -64,13 +63,12 @@ class ProjectServiceTest {
     }
 
     @Test
-    void removeHoursSpent_DoesNothingWhenNoProjectFound() throws InvalidWorkOrderException {
+    void removeHoursSpent_DoesNothingWhenNoProjectFound() {
         when(projectRepository.findByWorkorder(JAVA_GUILD_WORKORDER)).thenReturn(empty());
 
-        assertThatThrownBy(() -> projectService.updateHoursSpent(BookingDeletedTestBuilder.bookingDeleted()
+        projectService.updateHoursSpent(BookingDeletedTestBuilder.bookingDeleted()
                 .hours(2)
                 .workorder(JAVA_GUILD_WORKORDER)
-                .build()))
-                .isInstanceOf(InvalidWorkOrderException.class);
+                .build());
     }
 }

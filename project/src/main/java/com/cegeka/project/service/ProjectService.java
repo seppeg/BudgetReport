@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,18 +24,24 @@ public class ProjectService {
     private ProjectRepository projectRepository;
 
     @StreamListener(value = ProjectStreams.INPUT, condition = "headers['type']=='BookingCreated'")
-    public void updateHoursSpent(@Payload BookingCreated bookingCreated) throws InvalidWorkOrderException {
-        Project project = projectRepository.findByWorkorder(bookingCreated.getWorkorder())
-                .orElseThrow(() -> new InvalidWorkOrderException("No project for workorder " + bookingCreated.getWorkorder()));
-        project.addHoursSpent(bookingCreated.getHours());
+    public void updateHoursSpent(@Payload BookingCreated bookingCreated) {
+        Optional<Project> project = projectRepository.findByWorkorder(bookingCreated.getWorkorder());
+        project.ifPresent(p -> addHoursSpent(p, bookingCreated.getHours()));
+    }
+
+    private void addHoursSpent(Project p, double hours) {
+        p.addHoursSpent(hours);
         log.info("updated hours spent +");
     }
 
     @StreamListener(value = ProjectStreams.INPUT, condition = "headers['type']=='BookingDeleted'")
-    public void updateHoursSpent(@Payload BookingDeleted bookingDeleted) throws InvalidWorkOrderException {
-        Project project = projectRepository.findByWorkorder(bookingDeleted.getWorkorder())
-                .orElseThrow(() -> new InvalidWorkOrderException("No project for workorder " + bookingDeleted.getWorkorder()));
-        project.removeHoursSpent(bookingDeleted.getHours());
+    public void updateHoursSpent(@Payload BookingDeleted bookingDeleted) {
+        Optional<Project> project = projectRepository.findByWorkorder(bookingDeleted.getWorkorder());
+        project.ifPresent(p -> removeHoursSpent(p, bookingDeleted.getHours()));
+    }
+
+    private void removeHoursSpent(Project p, double hours) {
+        p.removeHoursSpent(hours);
         log.info("updated hours spent -");
     }
 
