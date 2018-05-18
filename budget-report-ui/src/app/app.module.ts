@@ -17,12 +17,15 @@ import {routing} from './app.routing';
 import {TestComponent} from './test/test.component';
 import {ProjectComponent} from './project/project.component';
 import {InMemoryDataService} from "./in-memory-data.service";
+import {MessageService} from './message.service';
+import {MessagesComponent} from './messages/messages.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         TestComponent,
-        ProjectComponent
+        ProjectComponent,
+        MessagesComponent
     ],
     imports: [
         BrowserModule,
@@ -37,7 +40,8 @@ import {InMemoryDataService} from "./in-memory-data.service";
     ],
     providers: [
         RouterModule,
-        AuthGuard
+        AuthGuard,
+        MessageService
     ],
     bootstrap: [AppComponent]
 })
