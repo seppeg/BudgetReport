@@ -17,13 +17,15 @@ import {TestComponent} from './test/test.component';
 import {ProjectComponent} from './project/project.component';
 import {MessageService} from './message.service';
 import {MessagesComponent} from './messages/messages.component';
+import {DragonComponent} from "./dragon.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         TestComponent,
         ProjectComponent,
-        MessagesComponent
+        MessagesComponent,
+        DragonComponent
     ],
     imports: [
         BrowserModule,
