@@ -44,4 +44,8 @@ public class Project {
     public String getDescription() {
         return description;
     }
+
+    public void removeHoursSpent(double hours) {
+        this.hoursSpent -= hours;
+    }
 }

@@ -3,7 +3,7 @@ package com.cegeka.project.service;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public final class ProjectTOTestBuilder {
+public final class BookingCreatedTestBuilder {
     private UUID id;
     private String workorder;
     private LocalDate date;
@@ -11,39 +11,39 @@ public final class ProjectTOTestBuilder {
     private double hours;
     private String employee;
 
-    private ProjectTOTestBuilder() {
+    private BookingCreatedTestBuilder() {
     }
 
-    public static ProjectTOTestBuilder projectTO() {
-        return new ProjectTOTestBuilder();
+    public static BookingCreatedTestBuilder bookingCreated() {
+        return new BookingCreatedTestBuilder();
     }
 
-    public ProjectTOTestBuilder id(UUID id) {
+    public BookingCreatedTestBuilder id(UUID id) {
         this.id = id;
         return this;
     }
 
-    public ProjectTOTestBuilder workorder(String workorder) {
+    public BookingCreatedTestBuilder workorder(String workorder) {
         this.workorder = workorder;
         return this;
     }
 
-    public ProjectTOTestBuilder date(LocalDate date) {
+    public BookingCreatedTestBuilder date(LocalDate date) {
         this.date = date;
         return this;
     }
 
-    public ProjectTOTestBuilder description(String description) {
+    public BookingCreatedTestBuilder description(String description) {
         this.description = description;
         return this;
     }
 
-    public ProjectTOTestBuilder hours(double hours) {
+    public BookingCreatedTestBuilder hours(double hours) {
         this.hours = hours;
         return this;
     }
 
-    public ProjectTOTestBuilder employee(String employee) {
+    public BookingCreatedTestBuilder employee(String employee) {
         this.employee = employee;
         return this;
     }
