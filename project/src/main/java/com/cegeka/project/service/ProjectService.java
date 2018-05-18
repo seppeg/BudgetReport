@@ -3,9 +3,11 @@ package com.cegeka.project.service;
 import com.cegeka.project.controller.ProjectR;
 import com.cegeka.project.domain.Project;
 import com.cegeka.project.domain.ProjectRepository;
+import com.cegeka.project.domain.Workorder;
 import com.cegeka.project.event.BookingCreated;
 import com.cegeka.project.event.BookingDeleted;
 import com.cegeka.project.event.ProjectCreated;
+import com.cegeka.project.event.ProjectCreatedBuilder;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cloud.stream.annotation.StreamListener;
@@ -17,23 +19,24 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.cegeka.project.event.ProjectCreatedBuilder.projectCreated;
+import static java.util.stream.Collectors.toList;
 
+@Log4j2
 @Service
 @Transactional
 @AllArgsConstructor
-@Log4j2
 public class ProjectService {
 
-    private final ProjectRepository projectRepository;
-    private final ProjectStreams projectStreams;
+    private ProjectRepository projectRepository;
+    private ProjectStreams projectStreams;
 
-    @StreamListener(value = ProjectStreams.INPUT, condition = "headers['type']=='BookingCreated'")
+    @StreamListener(ProjectStreams.INPUT)
     public void updateHoursSpent(@Payload BookingCreated bookingCreated) {
-        Optional<Project> project = projectRepository.findByWorkorder(bookingCreated.getWorkorder());
+        Optional<Project> project = projectRepository.findByWorkordersContains(bookingCreated.getWorkorder());
         project.ifPresent(p -> addHoursSpent(p, bookingCreated.getHours()));
     }
 
@@ -44,7 +47,7 @@ public class ProjectService {
 
     @StreamListener(value = ProjectStreams.INPUT, condition = "headers['type']=='BookingDeleted'")
     public void updateHoursSpent(@Payload BookingDeleted bookingDeleted) {
-        Optional<Project> project = projectRepository.findByWorkorder(bookingDeleted.getWorkorder());
+        Optional<Project> project = projectRepository.findByWorkordersContains(bookingDeleted.getWorkorder());
         project.ifPresent(p -> removeHoursSpent(p, bookingDeleted.getHours()));
     }
 
@@ -58,14 +61,18 @@ public class ProjectService {
     }
 
     public void createProject(ProjectR projectR) {
-        ProjectCreated projectCreated = projectCreated()
+        ProjectCreated projectCreated = ProjectCreatedBuilder.projectCreated()
                 .id(UUID.randomUUID())
-                .workorder(projectR.getWorkorder())
+                .workorder(getWorkorder(projectR))
                 .budget(projectR.getBudget())
                 .description(projectR.getDescription())
                 .build();
         projectRepository.save(new Project(projectCreated));
         raiseEvent(projectCreated);
+    }
+
+    private List<Workorder> getWorkorder(ProjectR projectR) {
+        return projectR.getWorkorder().stream().map(workorderR -> new Workorder(workorderR.getWorkorder())).collect(toList());
     }
 
     private void raiseEvent(Object event) {

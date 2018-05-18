@@ -4,9 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface ProjectRepository extends JpaRepository<Project, Long> {
+public interface ProjectRepository extends JpaRepository<Project, UUID> {
 
-    Optional<Project> findByWorkorder(String workorder);
+    Optional<Project> findByWorkordersContains(String workorder);
 }

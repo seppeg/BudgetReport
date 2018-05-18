@@ -1,6 +1,7 @@
 package com.cegeka.project.controller;
 
 import com.cegeka.project.domain.Project;
+import com.cegeka.project.domain.Workorder;
 import com.cegeka.project.service.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -32,6 +34,10 @@ public class ProjectController {
     }
 
     private ProjectR toProjectR(Project project) {
-        return new ProjectR(project.getDescription(), project.getWorkorder(), project.getBudget(), project.getHoursSpent());
+        return new ProjectR(project.getDescription(), mapToWorkordersR(project), project.getBudget(), project.getHoursSpent());
+    }
+
+    private List<WorkorderR> mapToWorkordersR(Project project) {
+        return project.getWorkorders().stream().map(workorder -> new WorkorderR(workorder.getId(),workorder.getWorkorder())).collect(toList());
     }
 }

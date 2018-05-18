@@ -39,7 +39,7 @@ class ProjectServiceTest {
                 .hoursSpent(0)
                 .build();
 
-        when(projectRepository.findByWorkorder(JAVA_GUILD_WORKORDER)).thenReturn(of(project));
+        when(projectRepository.findByWorkordersContains(JAVA_GUILD_WORKORDER)).thenReturn(of(project));
 
         projectService.updateHoursSpent(bookingCreated()
                 .hours(2)
@@ -55,7 +55,7 @@ class ProjectServiceTest {
                 .hoursSpent(10)
                 .build();
 
-        when(projectRepository.findByWorkorder(JAVA_GUILD_WORKORDER)).thenReturn(of(project));
+        when(projectRepository.findByWorkordersContains(JAVA_GUILD_WORKORDER)).thenReturn(of(project));
 
         projectService.updateHoursSpent(BookingDeletedTestBuilder.bookingDeleted()
                 .hours(2)
@@ -67,7 +67,7 @@ class ProjectServiceTest {
 
     @Test
     void removeHoursSpent_DoesNothingWhenNoProjectFound() {
-        when(projectRepository.findByWorkorder(JAVA_GUILD_WORKORDER)).thenReturn(empty());
+        when(projectRepository.findByWorkordersContains(JAVA_GUILD_WORKORDER)).thenReturn(empty());
 
         projectService.updateHoursSpent(BookingDeletedTestBuilder.bookingDeleted()
                 .hours(2)

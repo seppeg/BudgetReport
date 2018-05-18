@@ -1,11 +1,14 @@
 package com.cegeka.project.event;
 
+import com.cegeka.project.domain.Workorder;
+
+import java.util.List;
 import java.util.UUID;
 
 public final class ProjectCreatedBuilder {
     private UUID id;
     private String description;
-    private String workorder;
+    private List<Workorder> workorder;
     private double budget;
 
     private ProjectCreatedBuilder() {
@@ -25,7 +28,7 @@ public final class ProjectCreatedBuilder {
         return this;
     }
 
-    public ProjectCreatedBuilder workorder(String workorder) {
+    public ProjectCreatedBuilder workorder(List<Workorder> workorder) {
         this.workorder = workorder;
         return this;
     }
