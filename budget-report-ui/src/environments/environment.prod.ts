@@ -5,6 +5,6 @@
 
 export const environment = {
     production: true,
-    baseUrl: 'http://localhost:9000',
+    baseUrl: 'http://localhost:4200',
     projectApiUrl: 'http://project.localhost/project'
 };
