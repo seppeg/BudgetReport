@@ -4,13 +4,15 @@ import {HttpClient} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
 import {of} from "rxjs/observable/of";
 
+import {environment} from '../environments/environment';
+
 import {MessageService} from './message.service';
 import {Project} from './project';
 
 @Injectable()
 export class ProjectService {
 
-    private projectsUrl = 'api/projects';
+    private projectsUrl = environment.projectApiUrl;
 
     constructor(private http: HttpClient, private messageService: MessageService) {
     }

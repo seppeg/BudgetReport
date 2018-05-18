@@ -35,4 +35,5 @@ credentials*.env
 *prd.properties
 
 #angular
-*node_modules
+*node_modules/
+*dist/
