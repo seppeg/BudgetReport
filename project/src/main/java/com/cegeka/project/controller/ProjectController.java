@@ -3,9 +3,9 @@ package com.cegeka.project.controller;
 import com.cegeka.project.domain.Project;
 import com.cegeka.project.service.ProjectService;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
@@ -18,7 +18,7 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
-    @RequestMapping("/project")
+    @GetMapping("/project")
     public Collection<ProjectR> getAll() {
         return projectService.getAllProjects()
                 .stream()

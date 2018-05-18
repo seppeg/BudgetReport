@@ -97,6 +97,7 @@ services:
       SPRING_DATASOURCE_DRIVERCLASSNAME: org.postgresql.Driver
       SPRING_DATASOURCE_URL: jdbc:postgresql://bookingdb:5432/bookingdb
       SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      FRONTEND_ORIGIN: http://localhost:4200
     env_file:
      - booking/credentials_booking.env
     labels:
@@ -116,6 +117,7 @@ services:
       SPRING_DATASOURCE_DRIVERCLASSNAME: org.postgresql.Driver
       SPRING_DATASOURCE_URL: jdbc:postgresql://projectdb:5432/projectdb
       SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      FRONTEND_ORIGIN: http://localhost:4200
     env_file:
      - project/credentials_project.env
     labels:
@@ -134,6 +136,7 @@ services:
        SPRING_DATASOURCE_DRIVERCLASSNAME: org.postgresql.Driver
        SPRING_DATASOURCE_URL: jdbc:postgresql://employeedb:5432/employeedb
        SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+       FRONTEND_ORIGIN: http://localhost:4200
      env_file:
       - employee/credentials_employee.env
      labels:
