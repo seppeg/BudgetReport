@@ -14,7 +14,7 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: "booking:1:1,topic:1:1"
+      KAFKA_CREATE_TOPICS: "booking:1:1,project:1:1"
       KAFKA_LOG_RETENTION_MS: -1 #keep messages forever
 
   #databases
@@ -68,14 +68,17 @@ services:
      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
 
   #microservices
-#  camis:
-#    build: camis-connection
-#    container_name: camis
-#    env_file:
-#     - camis-connection/credentials_camis-connection.env
-#    labels:
-#     - "traefik.backend=camis"
-#     - "traefik.frontend.rule=Host:camis.localhost"
+  camis:
+    build: camis-connection
+    container_name: camis
+    links:
+     - booking
+    environment:
+      SPRING_PROFILES_ACTIVE: prd
+      BOOKING_URL: http://booking:8081
+    labels:
+     - "traefik.backend=camis"
+     - "traefik.frontend.rule=Host:camis.localhost"
 
   booking:
     build: booking

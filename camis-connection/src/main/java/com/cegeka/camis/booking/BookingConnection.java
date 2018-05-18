@@ -12,7 +12,7 @@ public class BookingConnection {
 
     private String bookingUrl;
 
-    BookingConnection(@Value("${bookingurl}")String bookingUrl){
+    BookingConnection(@Value("${booking.url}")String bookingUrl){
         this.bookingUrl = bookingUrl;
     }
 
