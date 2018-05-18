@@ -6,7 +6,6 @@ import com.cegeka.project.event.BookingDeletedTestBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -15,7 +14,7 @@ import static com.cegeka.project.service.BookingCreatedTestBuilder.bookingCreate
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,26 +32,30 @@ class ProjectServiceTest {
     }
 
     @Test
-    void updateHoursSpent() {
+    void updateHoursSpent() throws InvalidWorkOrderException {
+        Project project = project()
+                .hoursSpent(0)
+                .build();
+
+        when(projectRepository.findByWorkorder(JAVA_GUILD_WORKORDER)).thenReturn(of(project));
+
         projectService.updateHoursSpent(bookingCreated()
                 .hours(2)
                 .workorder(JAVA_GUILD_WORKORDER)
                 .build());
 
-        ArgumentCaptor<Project> captor = ArgumentCaptor.forClass(Project.class);
-        verify(projectRepository).save(captor.capture());
-        assertThat(captor.getValue().getHoursSpent()).isEqualTo(2);
+        assertThat(project.getHoursSpent()).isEqualTo(2);
     }
 
     @Test
-    void removeHoursSpent() {
+    void removeHoursSpent() throws InvalidWorkOrderException {
         Project project = project()
                 .hoursSpent(10)
                 .build();
 
         when(projectRepository.findByWorkorder(JAVA_GUILD_WORKORDER)).thenReturn(of(project));
 
-        projectService.deleteHoursSpent(BookingDeletedTestBuilder.bookingDeleted()
+        projectService.updateHoursSpent(BookingDeletedTestBuilder.bookingDeleted()
                 .hours(2)
                 .workorder(JAVA_GUILD_WORKORDER)
                 .build());
@@ -61,12 +64,13 @@ class ProjectServiceTest {
     }
 
     @Test
-    void removeHoursSpent_DoesNothingWhenNoProjectFound() {
+    void removeHoursSpent_DoesNothingWhenNoProjectFound() throws InvalidWorkOrderException {
         when(projectRepository.findByWorkorder(JAVA_GUILD_WORKORDER)).thenReturn(empty());
 
-        projectService.deleteHoursSpent(BookingDeletedTestBuilder.bookingDeleted()
+        assertThatThrownBy(() -> projectService.updateHoursSpent(BookingDeletedTestBuilder.bookingDeleted()
                 .hours(2)
                 .workorder(JAVA_GUILD_WORKORDER)
-                .build());
+                .build()))
+                .isInstanceOf(InvalidWorkOrderException.class);
     }
 }
