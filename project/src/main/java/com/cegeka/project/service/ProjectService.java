@@ -15,8 +15,6 @@ import java.util.Collection;
 @AllArgsConstructor
 public class ProjectService {
 
-    public static final String JAVA_GUILD_WORKORDER = "COCFL871.004";
-
     private ProjectRepository projectRepository;
 
     @StreamListener(ProjectStreams.INPUT)
@@ -26,6 +24,13 @@ public class ProjectService {
         project.addHoursSpent(bookingCreated.getHours());
         projectRepository.save(project);
     }
+
+    @StreamListener(ProjectStreams.INPUT)
+    public void deleteHoursSpent(@Payload BookingDeleted bookingDeleted) {
+        projectRepository.findByWorkorder(bookingDeleted.getWorkorder())
+                .ifPresent(project -> project.removeHoursSpent(bookingDeleted.getHours()));
+    }
+
 
     public Collection<Project> getAllProjects(){
         return projectRepository.findAll();
