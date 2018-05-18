@@ -1,22 +1,22 @@
 package com.cegeka.project.domain;
 
 import com.cegeka.project.event.ProjectCreated;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@ToString
 public class Project {
 
     @Id
     private UUID id;
     private String description;
-    @OneToMany
-    @JoinColumn(referencedColumnName = "project_id", nullable = false)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "project_id", nullable = false)
     private List<Workorder> workorders;
     private double budget;
     private double hoursSpent;
@@ -62,5 +62,18 @@ public class Project {
 
     public void removeHoursSpent(double hours) {
         this.hoursSpent -= hours;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Project)) return false;
+        Project project = (Project) o;
+        return Objects.equals(id, project.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

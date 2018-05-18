@@ -36,7 +36,7 @@ public class ProjectService {
 
     @StreamListener(ProjectStreams.INPUT)
     public void updateHoursSpent(@Payload BookingCreated bookingCreated) {
-        Optional<Project> project = projectRepository.findByWorkordersContains(bookingCreated.getWorkorder());
+        Optional<Project> project = projectRepository.findByWorkordersWorkorderContains(bookingCreated.getWorkorder());
         project.ifPresent(p -> addHoursSpent(p, bookingCreated.getHours()));
     }
 
@@ -47,7 +47,7 @@ public class ProjectService {
 
     @StreamListener(value = ProjectStreams.INPUT, condition = "headers['type']=='BookingDeleted'")
     public void updateHoursSpent(@Payload BookingDeleted bookingDeleted) {
-        Optional<Project> project = projectRepository.findByWorkordersContains(bookingDeleted.getWorkorder());
+        Optional<Project> project = projectRepository.findByWorkordersWorkorderContains(bookingDeleted.getWorkorder());
         project.ifPresent(p -> removeHoursSpent(p, bookingDeleted.getHours()));
     }
 

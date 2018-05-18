@@ -9,5 +9,5 @@ import java.util.UUID;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, UUID> {
 
-    Optional<Project> findByWorkordersContains(String workorder);
+    Optional<Project> findByWorkordersWorkorderContains(String workorder);
 }
