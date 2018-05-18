@@ -1,17 +1,18 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {of} from 'rxjs/observable/of';
+import {HttpClient} from '@angular/common/http';
 
 import {Project} from './project';
-import {PROJECTS} from './mock-projects';
 
 @Injectable()
 export class ProjectService {
 
-    constructor() {
+    private projectsUrl = 'api/projects';
+
+    constructor(private http: HttpClient) {
     }
 
     getProjects():  Observable<Project[]> {
-        return of(PROJECTS);
+        return this.http.get<Project[]>(this.projectsUrl);
     }
 }

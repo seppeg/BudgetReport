@@ -5,6 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {AuthGuard} from './app.guard';
+import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 
 import {GaugeModule} from 'angular-gauge';
 
@@ -15,6 +16,7 @@ import {routing} from './app.routing';
 
 import {TestComponent} from './test/test.component';
 import {ProjectComponent} from './project/project.component';
+import {InMemoryDataService} from "./in-memory-data.service";
 
 @NgModule({
     declarations: [
@@ -26,6 +28,9 @@ import {ProjectComponent} from './project/project.component';
         BrowserModule,
         FormsModule,
         HttpClientModule,
+        HttpClientInMemoryWebApiModule.forRoot(
+             InMemoryDataService
+        ),
         BrowserAnimationsModule,
         routing,
         GaugeModule.forRoot()
