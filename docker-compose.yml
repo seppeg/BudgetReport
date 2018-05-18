@@ -159,18 +159,6 @@ services:
 #      - "elasticsearch"
 #    ports:
 #      - "5601:5601"
-
-  example:
-    build: exampleprojectforreadingfromkafka
-    container_name: example
-    links:
-     - kafka
-    environment:
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-    labels:
-     - "traefik.backend=example"
-     - "traefik.frontend.rule=Host:example.localhost"
-
   #testing
   whoami: #for debugging and testing loadbalancing
     image: emilevauge/whoami
