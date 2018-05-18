@@ -1,14 +1,21 @@
 <h2>Projects</h2>
 <div class="projects">
     <div *ngFor="let project of projects">
-        <mwl-gauge
+        <ngx-charts-gauge
+                [view]="[400, 400]"
+                [scheme]="colorScheme"
+                [customColors]=""
+                [results]="[{
+                    name: project.description,
+                    value: project.hoursSpent / project.budget * 100
+                }]"
+                [valueFormatting]=""
+                [min]="0"
                 [max]="100"
-                [dialStartAngle]="-90"
-                [dialEndAngle]="-90.001"
-                [value]="project.hoursSpent / project.budget * 100"
-                [animated]="true"
-                [animationDuration]="1.5">
-        </mwl-gauge>
+                [angleSpan]="240"
+                [startAngle]="-120"
+                [bigSegments]="10">
+        </ngx-charts-gauge>
         <p>
             {{project.description}}
             <br>

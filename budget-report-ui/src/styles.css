@@ -7,6 +7,7 @@
 body {
     background-color: #090909;
     color: #edeeef;
+    margin:auto;
 }
 
 h1{
@@ -38,3 +39,5 @@ mwl-gauge > .gauge > .value-text {
     font-family: 'Roboto Mono', cursive;
     font-size: 1em;
 }
+
+.ngx-charts text { fill: #fff; }

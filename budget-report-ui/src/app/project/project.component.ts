@@ -12,6 +12,9 @@ import {Project} from "../project";
 export class ProjectComponent implements OnInit {
 
     projects: Project[];
+    colorScheme = {
+        domain: ['#5AA454']
+    };
 
     constructor(private projectService: ProjectService) {
     }

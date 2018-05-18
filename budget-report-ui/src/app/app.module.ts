@@ -6,7 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {AuthGuard} from './app.guard';
 
-import {GaugeModule} from 'angular-gauge';
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 import 'hammerjs';
 
@@ -36,7 +36,7 @@ import {DragonComponent} from "./dragon.component";
         // ),
         BrowserAnimationsModule,
         routing,
-        GaugeModule.forRoot()
+        NgxChartsModule
     ],
     providers: [
         RouterModule,
