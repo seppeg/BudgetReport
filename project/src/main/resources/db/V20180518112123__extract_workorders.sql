@@ -9,6 +9,6 @@ CREATE TABLE project (
 CREATE TABLE workorder (
   id UUID NOT NULL,
   workorder TEXT NOT NULL,
-  project_id UUID, NOT NULL,
+  project_id UUID NOT NULL,
   CONSTRAINT fk_workorder_project FOREIGN KEY (project_id) references project(id)
-)
+);
