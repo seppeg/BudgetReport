@@ -23,7 +23,7 @@ services:
     ports:
      - "5001:5432"
     env_file:
-      - booking/credentials_booking.env
+      - booking/credentials.env
     environment:
       - POSTGRES_DB=bookingdb
       - PGDATA=/var/lib/postgresql/data
@@ -35,7 +35,7 @@ services:
       ports:
        - "5002:5432"
       env_file:
-        - project/credentials_project.env
+        - project/credentials.env
       environment:
         - POSTGRES_DB=projectdb
         - PGDATA=/var/lib/postgresql/data
@@ -47,7 +47,7 @@ services:
       ports:
        - "5003:5432"
       env_file:
-        - employee/credentials_employee.env
+        - employee/credentials.env
       environment:
         - POSTGRES_DB=employeedb
         - PGDATA=/var/lib/postgresql/data
@@ -99,7 +99,7 @@ services:
       SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.PostgreSQLDialect
       FRONTEND_ORIGIN: http://localhost:4200
     env_file:
-     - booking/credentials_booking.env
+     - booking/credentials.env
     labels:
      - "traefik.backend=booking"
      - "traefik.frontend.rule=Host:booking.localhost"
@@ -119,7 +119,7 @@ services:
       SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.PostgreSQLDialect
       FRONTEND_ORIGIN: http://localhost:4200
     env_file:
-     - project/credentials_project.env
+     - project/credentials.env
     labels:
      - "traefik.backend=project"
      - "traefik.frontend.rule=Host:project.localhost"
@@ -138,7 +138,7 @@ services:
        SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.PostgreSQLDialect
        FRONTEND_ORIGIN: http://localhost:4200
      env_file:
-      - employee/credentials_employee.env
+      - employee/credentials.env
      labels:
       - "traefik.backend=employee"
       - "traefik.frontend.rule=Path:/employee"
