@@ -25,12 +25,12 @@ import static java.util.stream.Collectors.toMap;
 @Service
 @AllArgsConstructor
 @Log4j2
+@Transactional
 public class BookingService {
 
     private final BookingStreams bookingStreams;
     private final BookingRepository bookingRepository;
 
-    @Transactional
     public void processBookingData(List<BookingR> bookings) {
         List<Booking> storedBookings = bookingRepository.findByDateAfter(of(2010, 1, 1));
 
@@ -39,9 +39,9 @@ public class BookingService {
         Set<BookingR> removedBookings = difference(storedBookingsCopy.keySet(), bookingsCopy).immutableCopy();
         Set<BookingR> addedBookings = difference(bookingsCopy, storedBookingsCopy.keySet()).immutableCopy();
 
-        log.info(() -> "Removing "+removedBookings.size()+" bookings");
+        log.info(() -> "Removing " + removedBookings.size() + " bookings");
         removedBookings.stream().map(storedBookingsCopy::get).forEach(this::removeBooking);
-        log.info(() -> "Adding "+addedBookings.size()+" bookings");
+        log.info(() -> "Adding " + addedBookings.size() + " bookings");
         addedBookings.forEach(this::createBooking);
     }
 
