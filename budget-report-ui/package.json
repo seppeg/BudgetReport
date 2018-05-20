@@ -7,6 +7,7 @@
     "start": "ng serve",
     "stop": "ng stop",
     "build": "ng build",
+    "buildProd": "ng build --prod",
     "lint": "ng lint"
   },
   "private": true,

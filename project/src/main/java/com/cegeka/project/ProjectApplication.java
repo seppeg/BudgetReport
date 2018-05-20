@@ -1,7 +1,6 @@
 package com.cegeka.project;
 
 import com.cegeka.project.service.ProjectStreams;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -18,13 +17,11 @@ public class ProjectApplication {
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer(@Value("${frontend.origin}") String frontEndOrigin) {
+    public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/project")
-                        .allowedOrigins(frontEndOrigin)
-                        .allowedMethods("GET", "PUT");
+                registry.addMapping("/**");
             }
         };
     }

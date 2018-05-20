@@ -1,7 +1,9 @@
 package com.cegeka.domain;
 
 import com.cegeka.event.BookingCreated;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @ToString
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class Booking {
 
     @Id
@@ -22,10 +25,6 @@ public class Booking {
     private String description;
     private double hours;
     private String employee;
-
-    Booking(){
-
-    }
 
     public Booking(BookingCreated bookingCreated){
         this.id = UUID.randomUUID();

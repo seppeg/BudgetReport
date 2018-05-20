@@ -1,6 +1,7 @@
 package com.cegeka.project.controller;
 
 import com.cegeka.project.domain.Project;
+import com.cegeka.project.domain.Workorder;
 import com.cegeka.project.service.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,9 @@ public class ProjectController {
     }
 
     private List<WorkorderR> mapToWorkordersR(Project project) {
-        return project.getWorkorders().stream().map(workorder -> new WorkorderR(workorder.getWorkorder())).collect(toList());
+        return project.getWorkorders().stream()
+                .map(Workorder::getWorkorder)
+                .map(WorkorderR::new)
+                .collect(toList());
     }
 }

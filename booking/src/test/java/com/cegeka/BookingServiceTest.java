@@ -4,6 +4,7 @@ import com.cegeka.api.BookingR;
 import com.cegeka.domain.Booking;
 import com.cegeka.domain.BookingRepository;
 import com.cegeka.service.BookingService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +16,7 @@ import org.springframework.messaging.Message;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -26,9 +28,6 @@ import static java.util.Collections.emptyList;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-//import static org.hamcrest.MatcherAssert.assertThat;
-//import static org.hamcrest.core.Is.is;
-
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext
@@ -39,6 +38,9 @@ class BookingServiceTest {
 
     @Autowired
     private BookingStreams bookingStreams;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @MockBean
     private BookingRepository bookingRepository;
@@ -52,7 +54,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void createBooking_sendsEventToKafkaAsJson() throws InterruptedException {
+    void createBooking_sendsEventToKafkaAsJson() throws InterruptedException, IOException {
         BookingR booking = booking()
                 .date(LocalDate.now())
                 .description("test")
