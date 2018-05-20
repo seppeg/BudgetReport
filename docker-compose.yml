@@ -77,8 +77,10 @@ services:
     container_name: camis
     networks:
      - backend
+    env_file:
+      - camis-connection/credentials.env
     environment:
-      SPRING_PROFILES_ACTIVE: prd
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://camis-prd-sql;database=Camis_mdb
       BOOKING_URL: http://booking:8081
     labels:
      - "traefik.backend=camis"
