@@ -18,8 +18,8 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: "booking:1:1,project:1:1"
-      KAFKA_LOG_RETENTION_MS: -1 #keep messages forever
+    env_file:
+      - kafka.env
 
   #databases
   bookingdb:
@@ -121,7 +121,7 @@ volumes:
   project_data:
 
 networks:
-  backend:
   frontend:
+  backend:
   booking_backend:
   project_backend:
