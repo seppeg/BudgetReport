@@ -34,6 +34,8 @@ ext['hikaricp.version'] = '3.1.0'
 
 ext{
     springCloudStreamVersion = '2.0.0.RELEASE'
+    mockitoJUnitJupiterVersion = '2.18.3'
+    guavaVersion = '25.0-jre'
 }
 
 dependencies {
@@ -57,8 +59,8 @@ dependencies {
     compile "org.apache.logging.log4j:log4j-jcl"
 
     //actuator
-    compile 'org.springframework.boot:spring-boot-actuator-autoconfigure:2.0.2.RELEASE'
-    compile 'io.micrometer:micrometer-core:1.0.4'
+    compile 'org.springframework.boot:spring-boot-actuator-autoconfigure'
+    compile 'io.micrometer:micrometer-core'
 
     //cloud stream
     compile "org.springframework.cloud:spring-cloud-stream-binder-kafka:${springCloudStreamVersion}"
@@ -86,7 +88,7 @@ dependencies {
     //jaxb
     compile 'javax.xml.bind:jaxb-api'
 
-    compile 'com.google.guava:guava:25.0-jre'
+    compile "com.google.guava:guava:$guavaVersion"
 
     annotationProcessor 'org.projectlombok:lombok'
     compile 'org.projectlombok:lombok'
@@ -97,6 +99,6 @@ dependencies {
     testCompile 'org.hamcrest:hamcrest-core'
     testCompile 'org.hamcrest:hamcrest-library'
     testCompile 'org.mockito:mockito-core'
-    testCompile 'org.mockito:mockito-junit-jupiter:2.18.3'
+    testCompile "org.mockito:mockito-junit-jupiter:$mockitoJUnitJupiterVersion"
 
 }
