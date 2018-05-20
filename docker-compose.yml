@@ -4,11 +4,15 @@ services:
   #kafka/zookeeper for storing events
   zookeeper:
     image: wurstmeister/zookeeper:3.4.6
+    networks:
+      - backend
     ports:
       - "2181:2181"
   kafka:
     image: wurstmeister/kafka:1.0.0
-    links:
+    networks:
+      - backend
+    depends_on:
      - zookeeper
     environment:
       KAFKA_ADVERTISED_HOST_NAME: kafka
@@ -20,6 +24,8 @@ services:
   #databases
   bookingdb:
     image: postgres:10.3
+    networks:
+     - booking_backend
     env_file:
       - booking/credentials.env
     environment:
@@ -30,6 +36,8 @@ services:
 
   projectdb:
       image: postgres:10.3
+      networks:
+       - project_backend
       env_file:
         - project/credentials.env
       environment:
@@ -42,6 +50,9 @@ services:
   traefik:
     image: traefik
     command: --api --docker --docker.domain=localhost --logLevel="DEBUG" --accesslogsfile=/dev/stdout
+    networks:
+      - backend
+      - frontend
     ports:
      - "80:80"
      - "443:443"
@@ -51,8 +62,10 @@ services:
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
 
-  frontend:
+  angular:
     build: budget-report-ui
+    networks:
+      - frontend
     labels:
      - "traefik.backend=website"
      - "traefik.frontend.rule=HostRegexp:{catchall:.*}"
@@ -62,8 +75,8 @@ services:
   camis:
     build: camis-connection
     container_name: camis
-    links:
-     - booking
+    networks:
+     - backend
     environment:
       SPRING_PROFILES_ACTIVE: prd
       BOOKING_URL: http://booking:8081
@@ -74,9 +87,9 @@ services:
   booking:
     build: booking
     container_name: booking
-    links:
-     - kafka
-     - bookingdb
+    networks:
+     - backend
+     - booking_backend
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
@@ -90,9 +103,9 @@ services:
   project:
     build: project
     container_name: project
-    links:
-     - kafka
-     - projectdb
+    networks:
+      - backend
+      - project_backend
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
@@ -106,3 +119,9 @@ services:
 volumes:
   booking_data:
   project_data:
+
+networks:
+  backend:
+  frontend:
+  booking_backend:
+  project_backend:
