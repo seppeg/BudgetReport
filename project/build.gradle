@@ -51,6 +51,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     compile 'org.projectlombok:lombok'
 
+    compile 'com.google.guava:guava:25.0-jre'
+
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testCompile 'org.junit.jupiter:junit-jupiter-api'
     testCompile 'org.assertj:assertj-core'
