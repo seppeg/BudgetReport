@@ -57,7 +57,7 @@ services:
   #reverse proxy & load balancer
   traefik:
     image: traefik
-    command: --api --docker --docker.domain=localhost
+    command: --api --docker --docker.domain=localhost --logLevel="DEBUG" --accesslogsfile=/dev/stdout
     ports:
      - "80:80"
      - "443:443"
@@ -66,6 +66,14 @@ services:
       - .env
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+
+  frontend:
+    build: budget-report-ui
+    labels:
+     - "traefik.backend=website"
+     - "traefik.frontend.rule=HostRegexp:{catchall:.*}"
+     - "traefik.frontend.priority=1"
+     - "traefik.frontend.passHostHeader=true"
 
   #microservices
   camis:
@@ -86,11 +94,6 @@ services:
     links:
      - kafka
      - bookingdb
-#     - fluentd
-#    logging:
-#      driver: "fluentd"
-#      options:
-#        tag: booking
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
@@ -103,7 +106,6 @@ services:
     labels:
      - "traefik.backend=booking"
      - "traefik.frontend.rule=Host:booking.localhost"
-
 
   project:
     build: project
@@ -142,35 +144,6 @@ services:
      labels:
       - "traefik.backend=employee"
       - "traefik.frontend.rule=Path:/employee"
-
-  #EFK stack
-#  fluentd:
-#    build: ./fluentd
-#    links:
-#      - "elasticsearch"
-#    ports:
-#      - "24224:24224"
-#      - "24224:24224/udp"
-#
-#  elasticsearch:
-#    image: elasticsearch
-#    expose:
-#      - 9200
-#    ports:
-#      - "9200:9200"
-#
-#  kibana:
-#    image: kibana
-#    links:
-#      - "elasticsearch"
-#    ports:
-#      - "5601:5601"
-  #testing
-  whoami: #for debugging and testing loadbalancing
-    image: emilevauge/whoami
-    labels:
-     - "traefik.frontend.rule=Host:whoami.localhost"
-
 
 volumes:
   booking_data:

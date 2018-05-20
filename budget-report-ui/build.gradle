@@ -14,3 +14,11 @@ task ngBuild(type: NpmTask) {
 }
 
 ngBuild.dependsOn npmInstall
+
+task ngBuildProd(type: NpmTask) {
+    group = 'budget-report-ui'
+    description = 'Build Angular application'
+    args = ['run', 'buildProd']
+}
+
+ngBuildProd.dependsOn npmInstall
