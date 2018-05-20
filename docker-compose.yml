@@ -20,8 +20,6 @@ services:
   #databases
   bookingdb:
     image: postgres:10.3
-    ports:
-     - "5001:5432"
     env_file:
       - booking/credentials.env
     environment:
@@ -32,8 +30,6 @@ services:
 
   projectdb:
       image: postgres:10.3
-      ports:
-       - "5002:5432"
       env_file:
         - project/credentials.env
       environment:
@@ -44,8 +40,6 @@ services:
 
   employeedb:
       image: postgres:10.3
-      ports:
-       - "5003:5432"
       env_file:
         - employee/credentials.env
       environment:
@@ -65,7 +59,7 @@ services:
     env_file:
       - .env
     volumes:
-     - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+     - /var/run/docker.sock:/var/run/docker.sock
 
   frontend:
     build: budget-report-ui
@@ -140,7 +134,7 @@ services:
       - employee/credentials.env
      labels:
       - "traefik.backend=employee"
-      - "traefik.frontend.rule=Path:/employee"
+      - "traefik.frontend.rule=Host:employee.localhost"
 
 volumes:
   booking_data:
