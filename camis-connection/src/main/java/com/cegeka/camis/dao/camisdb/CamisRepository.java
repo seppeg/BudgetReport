@@ -1,4 +1,4 @@
-package com.cegeka.camis.connection;
+package com.cegeka.camis.dao.camisdb;
 
 import com.cegeka.camis.booking.CamisBooking;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static com.cegeka.camis.booking.CamisBooking.Builder.booking;
