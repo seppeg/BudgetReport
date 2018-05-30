@@ -1,4 +1,4 @@
-package com.cegeka.camis.dao.camisdb;
+package com.cegeka.camis.connection;
 
 import com.cegeka.camis.booking.CamisBooking;
 import org.springframework.beans.factory.annotation.Autowired;

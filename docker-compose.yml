@@ -46,18 +46,6 @@ services:
       volumes:
         - project_data:/var/lib/postgresql/data
 
-  camisworkingdb:
-      image: postgres:10.3
-      networks:
-       - backend
-      env_file:
-        - camis-connection/credentials.env
-      environment:
-        - POSTGRES_DB=workingdb
-        - PGDATA=/var/lib/postgresql/data
-      volumes:
-        - camisworkingdb_data:/var/lib/postgresql/data
-
   #reverse proxy & load balancer
   traefik:
     image: traefik
@@ -92,8 +80,7 @@ services:
     env_file:
       - camis-connection/credentials.env
     environment:
-      CAMISDB_DATASOURCE_URL: jdbc:sqlserver://camis-prd-sql;database=Camis_mdb
-      WORKINGDB_JDBC_URL: jdbc:postgresql://camisworkingdb:5432/workingdb
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://camis-prd-sql;database=Camis_mdb
       BOOKING_URL: http://booking:8081
     labels:
      - "traefik.backend=camis"
@@ -134,7 +121,6 @@ services:
 volumes:
   booking_data:
   project_data:
-  camisworkingdb_data:
 
 networks:
   frontend:

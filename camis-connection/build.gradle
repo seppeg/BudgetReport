@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'org.springframework.boot' version '2.0.2.RELEASE'
+    id 'org.springframework.boot' version '2.0.0.RELEASE'
     id 'io.spring.dependency-management' version '1.0.4.RELEASE'
 }
 
@@ -14,24 +14,12 @@ repositories {
     mavenCentral()
 }
 
-ext['hikaricp.version'] = '3.1.0'
-
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-webflux'
     compile 'com.microsoft.sqlserver:mssql-jdbc:6.4.0.jre9'
     compile 'org.springframework.boot:spring-boot-starter-jdbc'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
-
-    compile 'org.flywaydb:flyway-core'
-    compile 'org.springframework.data:spring-data-jpa'
-    compile 'org.springframework:spring-jdbc'
-    compile 'org.hibernate:hibernate-core'
-    compile 'com.zaxxer:HikariCP'
-    compile 'org.postgresql:postgresql'
-    testCompile 'com.h2database:h2'
-
-    compile 'javax.xml.bind:jaxb-api'
 
     compile project (':timeprovider-util')
 

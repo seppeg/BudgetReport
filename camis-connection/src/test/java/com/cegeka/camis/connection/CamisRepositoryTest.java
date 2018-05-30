@@ -1,7 +1,6 @@
 package com.cegeka.camis.connection;
 
 import com.cegeka.camis.booking.CamisBooking;
-import com.cegeka.camis.dao.camisdb.CamisRepository;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.AfterAll;

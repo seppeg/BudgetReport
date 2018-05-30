@@ -1,6 +1,6 @@
 package com.cegeka.camis.booking;
 
-import com.cegeka.camis.dao.camisdb.CamisRepository;
+import com.cegeka.camis.connection.CamisRepository;
 import com.cegeka.timeprovider.Timeprovider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
