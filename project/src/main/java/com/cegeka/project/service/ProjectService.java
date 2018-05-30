@@ -31,8 +31,9 @@ import static java.util.stream.Collectors.toList;
 @AllArgsConstructor
 public class ProjectService {
 
-    private ProjectRepository projectRepository;
-    private ProjectStreams projectStreams;
+    private final ProjectRepository projectRepository;
+    private final ProjectStreams projectStreams;
+    private final WorkOrderTracker workOrderTracker;
 
     @StreamListener(ProjectStreams.INPUT)
     public void updateHoursSpent(@Payload BookingCreated bookingCreated) {
@@ -61,17 +62,19 @@ public class ProjectService {
     }
 
     public void createProject(ProjectR projectR) {
+        List<Workorder> workorders = getWorkorders(projectR);
         ProjectCreated projectCreated = ProjectCreatedBuilder.projectCreated()
                 .id(UUID.randomUUID())
-                .workorder(getWorkorder(projectR))
+                .workorder(workorders)
                 .budget(projectR.getBudget())
                 .description(projectR.getDescription())
                 .build();
+        workOrderTracker.trackWorkOrders(workorders.stream().map(Workorder::getWorkorder).collect(toList()));
         projectRepository.save(new Project(projectCreated));
         raiseEvent(projectCreated);
     }
 
-    private List<Workorder> getWorkorder(ProjectR projectR) {
+    private List<Workorder> getWorkorders(ProjectR projectR) {
         return projectR.getWorkorder().stream().map(workorderR -> new Workorder(workorderR.getWorkorder())).collect(toList());
     }
 

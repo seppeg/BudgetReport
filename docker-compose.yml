@@ -113,6 +113,7 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
       SPRING_DATASOURCE_URL: jdbc:postgresql://projectdb:5432/projectdb
+      ZOOKEEPER_HOST: zookeeper:2181
     env_file:
      - project/credentials.env
     labels:

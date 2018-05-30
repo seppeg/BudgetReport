@@ -16,20 +16,17 @@ targetCompatibility = 1.9
 
 repositories {
     mavenCentral()
-}
-
-test {
-    useJUnitPlatform {
-        excludeTags 'slow'
-        includeEngines 'junit-jupiter'
-    }
-
-    failFast = false
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-webflux'
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    annotationProcessor 'org.projectlombok:lombok'
+    compile 'org.projectlombok:lombok'
+
+    compile 'org.springframework.cloud:spring-cloud-starter-zookeeper-config:2.0.0.RC1'
 
     //persistence
     compile 'org.flywaydb:flyway-core'
@@ -48,11 +45,10 @@ dependencies {
     //jaxb
     compile 'javax.xml.bind:jaxb-api'
 
-    annotationProcessor 'org.projectlombok:lombok'
-    compile 'org.projectlombok:lombok'
 
     compile 'com.google.guava:guava:25.0-jre'
 
+    test.useJUnitPlatform()
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testCompile 'org.junit.jupiter:junit-jupiter-api'
     testCompile 'org.assertj:assertj-core'
