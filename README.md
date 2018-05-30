@@ -1,6 +1,6 @@
 # BudgetReport
 
-##Configuration
+## Configuration
 Create a credentials.env file in booking, project and camis-connection. 
 The databases for booking and project are created inside docker so feel free to choose any user/passwords.
 The database for camis is not, valid credentials must be specified.
@@ -21,7 +21,7 @@ POSTGRES_PASSWORD=ddd
 SPRING_DATASOURCE_USERNAME=eee
 SPRING_DATASOURCE_PASSWORD=fff
 
-###DNS
+### DNS
 You may need to add following hosts to /etc/hosts 
 unless your dns resolver will already resolve wildcards for localhost.
 
@@ -30,7 +30,7 @@ unless your dns resolver will already resolve wildcards for localhost.
 127.0.0.1 camis.localhost
 
 
-##Build & Run:
+## Build & Run:
 * ./gradlew ngBuildProd
 * ./gradlew build
 * docker-compose build
