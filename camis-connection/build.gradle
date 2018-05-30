@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'org.springframework.boot' version '2.0.0.RELEASE'
+    id 'org.springframework.boot' version '2.0.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.4.RELEASE'
 }
 
@@ -12,6 +12,7 @@ targetCompatibility=1.9
 
 repositories {
     mavenCentral()
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 dependencies {
@@ -20,6 +21,11 @@ dependencies {
     compile 'com.microsoft.sqlserver:mssql-jdbc:6.4.0.jre9'
     compile 'org.springframework.boot:spring-boot-starter-jdbc'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
+
+    annotationProcessor 'org.projectlombok:lombok'
+    compile 'org.projectlombok:lombok'
+
+    compile "org.springframework.cloud:spring-cloud-starter-zookeeper-config:2.0.0.RC1"
 
     compile project (':timeprovider-util')
 

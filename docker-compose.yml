@@ -82,6 +82,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:sqlserver://camis-prd-sql;database=Camis_mdb
       BOOKING_URL: http://booking:8081
+      ZOOKEEPER_HOST: zookeeper:2181
     labels:
      - "traefik.backend=camis"
      - "traefik.frontend.rule=Host:camis.localhost"

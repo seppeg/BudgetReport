@@ -1,6 +1,5 @@
 package com.cegeka.camis.booking;
 
-import com.cegeka.camis.connection.CamisRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,8 +1,7 @@
-package com.cegeka.camis.connection;
+package com.cegeka.camis.booking;
 
-import com.cegeka.camis.booking.CamisBooking;
+import com.cegeka.camis.connection.StubWorkOrderConfig;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,7 @@ class CamisRepositoryTest {
 
     @Test
     public void testDataAccess() {
-        List<CamisBooking> actual = new CamisRepository(db, Lists.newArrayList("COCFL871.004","COCFL874.004","COCFL860.004")).findActualsFor(201801);
+        List<CamisBooking> actual = new CamisRepository(db, new StubWorkOrderConfig("COCFL871.004","COCFL874.004","COCFL860.004")).findActualsFor(201801);
 
         Assertions.assertThat(actual).usingRecursiveFieldByFieldElementComparator()
                 .containsOnly(booking()
