@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 
 @Component
 @RefreshScope
@@ -16,7 +17,10 @@ public class WorkOrderConfig {
     private String trackedWorkOrders;
 
     public List<String> getTrackedWorkOrders() {
-        return asList(trackedWorkOrders.split(","));
+        String[] workOrders = trackedWorkOrders.split(",");
+        return workOrders.length == 1 && workOrders[0].isEmpty()
+                ? emptyList()
+                : asList(workOrders);
     }
 
 }
