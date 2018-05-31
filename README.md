@@ -1,4 +1,4 @@
-# BudgetReport
+# BudgetReport [![Build Status](https://travis-ci.org/seppeg/BudgetReport.svg?branch=master)](https://travis-ci.org/seppeg/BudgetReport)
 
 ## Configuration
 Create a credentials.env file in booking, project and camis-connection. 
