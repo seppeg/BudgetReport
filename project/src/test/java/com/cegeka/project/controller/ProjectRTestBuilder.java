@@ -1,10 +1,12 @@
 package com.cegeka.project.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 public final class ProjectRTestBuilder {
-    private String description;
-    private List<WorkorderR> workorder;
+    private UUID projectId;
+    private String name;
+    private List<WorkOrderR> workorder;
     private double budget;
     private double hoursSpent;
 
@@ -15,12 +17,12 @@ public final class ProjectRTestBuilder {
         return new ProjectRTestBuilder();
     }
 
-    public ProjectRTestBuilder description(String description) {
-        this.description = description;
+    public ProjectRTestBuilder name(String name) {
+        this.name = name;
         return this;
     }
 
-    public ProjectRTestBuilder workorder(List<WorkorderR> workorder) {
+    public ProjectRTestBuilder workorder(List<WorkOrderR> workorder) {
         this.workorder = workorder;
         return this;
     }
@@ -35,7 +37,12 @@ public final class ProjectRTestBuilder {
         return this;
     }
 
+    public ProjectRTestBuilder id(UUID id) {
+        this.projectId = id;
+        return this;
+    }
+
     public ProjectR build() {
-        return new ProjectR(description, workorder, budget, hoursSpent);
+        return new ProjectR(projectId, name, workorder, budget, hoursSpent);
     }
 }

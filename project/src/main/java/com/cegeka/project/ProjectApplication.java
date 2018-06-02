@@ -1,6 +1,6 @@
 package com.cegeka.project;
 
-import com.cegeka.project.service.ProjectStreams;
+import com.cegeka.project.infrastructure.ProjectStreams;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;

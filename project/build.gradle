@@ -22,6 +22,9 @@ repositories {
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-webflux'
+    compile 'io.projectreactor.ipc:reactor-netty'
+    compile 'org.synchronoss.cloud:nio-multipart-parser'
+    compile 'org.hibernate.validator:hibernate-validator'
     testCompile("org.springframework.boot:spring-boot-starter-test")
     annotationProcessor 'org.projectlombok:lombok'
     compile 'org.projectlombok:lombok'

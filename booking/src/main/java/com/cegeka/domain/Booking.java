@@ -20,7 +20,7 @@ public class Booking {
 
     @Id
     private UUID id;
-    private String workorder;
+    private String workOrder;
     private LocalDate date;
     private String description;
     private double hours;
@@ -28,7 +28,7 @@ public class Booking {
 
     public Booking(BookingCreated bookingCreated){
         this.id = UUID.randomUUID();
-        this.workorder = bookingCreated.getWorkorder();
+        this.workOrder = bookingCreated.getWorkOrder();
         this.date = bookingCreated.getDate();
         this.description = bookingCreated.getDescription();
         this.employee = bookingCreated.getEmployee();
@@ -36,7 +36,7 @@ public class Booking {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Booking)) return false;
         Booking booking = (Booking) o;
@@ -44,7 +44,7 @@ public class Booking {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(id);
     }
 }

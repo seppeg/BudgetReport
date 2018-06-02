@@ -9,7 +9,7 @@ import java.util.UUID;
 public class BookingDeleted {
 
     private final UUID id;
-    private String workorder;
+    private String workOrder;
     private LocalDate date;
     private String description;
     private double hours;

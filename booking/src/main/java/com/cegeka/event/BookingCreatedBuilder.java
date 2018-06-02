@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public final class BookingCreatedBuilder {
     private UUID id;
-    private String workorder;
+    private String workOrder;
     private LocalDate date;
     private String description;
     private double hours;
@@ -23,8 +23,8 @@ public final class BookingCreatedBuilder {
         return this;
     }
 
-    public BookingCreatedBuilder workorder(String workorder) {
-        this.workorder = workorder;
+    public BookingCreatedBuilder workOrder(String workorder) {
+        this.workOrder = workorder;
         return this;
     }
 
@@ -49,6 +49,6 @@ public final class BookingCreatedBuilder {
     }
 
     public BookingCreated build() {
-        return new BookingCreated(id, workorder, date, description, hours, employee);
+        return new BookingCreated(id, workOrder, date, description, hours, employee);
     }
 }

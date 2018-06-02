@@ -1,5 +1,7 @@
 package com.cegeka.project.domain;
 
+import com.cegeka.project.domain.project.Project;
+import com.cegeka.project.domain.workorder.WorkOrder;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
@@ -8,7 +10,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public final class ProjectTestBuilder {
     private String description = "description";
-    private List<Workorder> workorders = newArrayList();
+    private List<WorkOrder> workOrders = newArrayList();
     private double budget = 500;
     private double hoursSpent = 0;
 
@@ -24,13 +26,13 @@ public final class ProjectTestBuilder {
         return this;
     }
 
-    public ProjectTestBuilder workorders(List<Workorder> workorders) {
-        this.workorders = workorders;
+    public ProjectTestBuilder workorders(List<WorkOrder> workOrders) {
+        this.workOrders = workOrders;
         return this;
     }
 
-    public ProjectTestBuilder workorder(Workorder workorder) {
-        this.workorders.add(workorder);
+    public ProjectTestBuilder workorder(WorkOrder workOrder) {
+        this.workOrders.add(workOrder);
         return this;
     }
 
@@ -45,7 +47,7 @@ public final class ProjectTestBuilder {
     }
 
     public Project build() {
-        Project project = new Project(workorders, description, budget);
+        Project project = new Project(description, workOrders, budget);
         ReflectionTestUtils.setField(project, "hoursSpent", hoursSpent);
         return project;
     }

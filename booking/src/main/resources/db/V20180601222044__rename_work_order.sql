@@ -1,0 +1,1 @@
+ALTER TABLE BOOKING RENAME COLUMN workorder TO work_order;

@@ -1,4 +1,4 @@
-package com.cegeka.project.service;
+package com.cegeka.project.infrastructure;
 
 import lombok.AllArgsConstructor;
 import org.apache.curator.framework.CuratorFramework;

@@ -15,7 +15,7 @@ import java.util.UUID;
 public class BookingCreated implements BookingEvent {
 
     private UUID id;
-    private String workorder;
+    private String workOrder;
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate date;
     private String description;

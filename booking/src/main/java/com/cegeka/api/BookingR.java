@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class BookingR {
 
-    private String workorder;
+    private String workOrder;
     private LocalDate date;
     private String description;
     private double hours;
@@ -20,7 +20,7 @@ public class BookingR {
 
     public BookingR(Booking b) {
         this.description = b.getDescription();
-        this.workorder = b.getWorkorder();
+        this.workOrder = b.getWorkOrder();
         this.employee = b.getEmployee();
         this.hours = b.getHours();
         this.date = b.getDate();

@@ -8,6 +8,9 @@ import com.cegeka.event.BookingCreated;
 import com.cegeka.event.BookingCreatedBuilder;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
@@ -28,8 +31,14 @@ import static java.util.stream.Collectors.toMap;
 @Transactional
 public class BookingService {
 
+    private static final int PAGE_SIZE = 20;
+
     private final BookingStreams bookingStreams;
     private final BookingRepository bookingRepository;
+
+    public Page<Booking> getBookings(int page){
+        return bookingRepository.findAll(PageRequest.of(page, PAGE_SIZE, Sort.by("date")));
+    }
 
     public void processBookingData(List<BookingR> bookings) {
         List<Booking> storedBookings = bookingRepository.findByDateAfter(of(2010, 1, 1));
@@ -53,14 +62,14 @@ public class BookingService {
                 .description(booking.getDescription())
                 .employee(booking.getEmployee())
                 .hours(booking.getHours())
-                .workorder(booking.getWorkorder())
+                .workOrder(booking.getWorkOrder())
                 .build());
     }
 
     private void createBooking(BookingR bookingR) {
         BookingCreated bookingCreated = BookingCreatedBuilder.createBooking()
                 .id(UUID.randomUUID())
-                .workorder(bookingR.getWorkorder())
+                .workOrder(bookingR.getWorkOrder())
                 .description(bookingR.getDescription())
                 .employee(bookingR.getEmployee())
                 .hours(bookingR.getHours())

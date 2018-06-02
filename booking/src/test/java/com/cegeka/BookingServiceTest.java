@@ -76,7 +76,7 @@ class BookingServiceTest {
                 .description("test")
                 .employee("1123")
                 .hours(1)
-                .workorder("workorder")
+                .workOrder("workorder")
                 .build());
         when(bookingRepository.findByDateAfter(any())).thenReturn(List.of(booking));
         BookingR bookingR = booking()
@@ -98,7 +98,7 @@ class BookingServiceTest {
                 .description("test")
                 .employee("1123")
                 .hours(1)
-                .workorder("workorder")
+                .workOrder("workorder")
                 .build());
         when(bookingRepository.findByDateAfter(any())).thenReturn(List.of(booking));
         bookingService.processBookingData(emptyList());

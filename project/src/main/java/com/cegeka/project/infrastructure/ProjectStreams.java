@@ -1,4 +1,4 @@
-package com.cegeka.project.service;
+package com.cegeka.project.infrastructure;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;

@@ -1,46 +1,43 @@
 package com.cegeka.project.controller;
 
-import com.cegeka.project.domain.Project;
-import com.cegeka.project.domain.Workorder;
+import com.cegeka.project.domain.daybooking.MonthlyWorkOrderBookingView;
+import com.cegeka.project.service.ProjectAlreadyExistsException;
+import com.cegeka.project.service.ProjectBookingService;
 import com.cegeka.project.service.ProjectService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 
 @RestController
 @AllArgsConstructor
+@Log4j2
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final ProjectBookingService projectBookingService;
 
     @GetMapping("/project")
     public Collection<ProjectR> getAll() {
         return projectService.getAllProjects()
                 .stream()
-                .map(this::toProjectR)
+                .map(ProjectR::new)
                 .collect(toList());
     }
 
     @PutMapping("/project")
-    public void createProject(@RequestBody ProjectR projectR){
-        projectService.createProject(projectR);
+    public ProjectR createProject(@RequestBody ProjectR projectR) throws ProjectAlreadyExistsException {
+        log.info(() -> "creating project "+projectR);
+        return projectService.createProject(projectR);
     }
 
-    private ProjectR toProjectR(Project project) {
-        return new ProjectR(project.getDescription(), mapToWorkordersR(project), project.getBudget(), project.getHoursSpent());
-    }
-
-    private List<WorkorderR> mapToWorkordersR(Project project) {
-        return project.getWorkorders().stream()
-                .map(Workorder::getWorkorder)
-                .map(WorkorderR::new)
-                .collect(toList());
+    @GetMapping("/projectbooking/{projectId}")
+    public Collection<MonthlyWorkOrderBookingView> getMonthlyProjectBookings(@PathVariable("projectId") UUID projectId){
+        Collection<String> projectWorkOrders = projectService.findProjectWorkOrders(projectId);
+        return projectBookingService.getMonthlyWorkOrderBookings(projectWorkOrders);
     }
 }

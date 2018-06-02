@@ -1,14 +1,12 @@
 package com.cegeka.project.event;
 
-import com.cegeka.project.domain.Workorder;
-
 import java.util.List;
 import java.util.UUID;
 
 public final class ProjectCreatedTestBuilder {
     private UUID id;
-    private String description;
-    private List<Workorder> workorders;
+    private String name;
+    private List<String> workOrders;
     private double budget;
 
     private ProjectCreatedTestBuilder() {
@@ -23,13 +21,13 @@ public final class ProjectCreatedTestBuilder {
         return this;
     }
 
-    public ProjectCreatedTestBuilder description(String description) {
-        this.description = description;
+    public ProjectCreatedTestBuilder name(String name) {
+        this.name = name;
         return this;
     }
 
-    public ProjectCreatedTestBuilder workorders(List<Workorder> workorders) {
-        this.workorders = workorders;
+    public ProjectCreatedTestBuilder workorders(List<String> workOrders) {
+        this.workOrders = workOrders;
         return this;
     }
 
@@ -39,6 +37,6 @@ public final class ProjectCreatedTestBuilder {
     }
 
     public ProjectCreated build() {
-        return new ProjectCreated(id, description, workorders, budget);
+        return new ProjectCreated(id, name, workOrders, budget);
     }
 }

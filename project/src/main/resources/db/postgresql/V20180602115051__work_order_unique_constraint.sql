@@ -1,0 +1,1 @@
+ALTER TABLE work_order ADD CONSTRAINT uq_work_order_work_order UNIQUE (work_order);
