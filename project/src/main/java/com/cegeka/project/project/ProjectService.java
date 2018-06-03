@@ -1,5 +1,6 @@
 package com.cegeka.project.project;
 
+import com.cegeka.project.infrastructure.UnexistingResourceException;
 import com.cegeka.project.workorder.WorkOrder;
 import com.cegeka.project.workorder.WorkOrderR;
 import com.cegeka.project.workorder.WorkOrderRepository;
@@ -9,13 +10,10 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
+import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
 
 @Log4j2
 @Service
@@ -31,13 +29,21 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public ProjectR createProject(ProjectR projectR) throws ProjectAlreadyExistsException {
+    public UUID createProject(ProjectR projectR) throws ProjectAlreadyExistsException {
         validateProjectName(projectR);
         List<WorkOrder> workOrders = findOrCreateWorkOrders(projectR);
         Set<ProjectYearBudget> budgets = createBudgets(projectR);
         Project project = projectRepository.save(new Project(projectR.getName(), workOrders, budgets));
         eventPublisher.publishEvent(new ProjectCreated(projectR));
-        return new ProjectR(project);
+        return project.getId();
+    }
+
+    public void updateProject(UUID projectId, ProjectR projectR) throws UnexistingResourceException {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new UnexistingResourceException("project", projectId));
+        List<WorkOrder> workOrders = findOrCreateWorkOrders(projectR);
+        Set<ProjectYearBudget> budgets = createBudgets(projectR);
+        project.update(projectR.getName(), workOrders, budgets);
     }
 
     private void validateProjectName(ProjectR projectR) throws ProjectAlreadyExistsException {
@@ -59,7 +65,7 @@ public class ProjectService {
         return projectR.getBudgets()
                 .stream()
                 .map(b -> new ProjectYearBudget(b.getYear(), b.getBudget()))
-                .collect(toSet());
+                .collect(toCollection(TreeSet::new));
     }
 
     public Collection<String> findProjectWorkOrders(UUID projectId) {
@@ -69,5 +75,9 @@ public class ProjectService {
                 .flatMap(Collection::stream)
                 .map(WorkOrder::getWorkOrder)
                 .collect(toList());
+    }
+
+    public Optional<ProjectR> findProject(UUID projectId){
+        return projectRepository.findById(projectId).map(ProjectR::new);
     }
 }

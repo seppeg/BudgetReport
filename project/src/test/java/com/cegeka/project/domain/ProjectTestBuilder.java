@@ -12,7 +12,7 @@ import java.util.SortedSet;
 import static com.google.common.collect.Lists.newArrayList;
 
 public final class ProjectTestBuilder {
-    private String description = "description";
+    private String name = "description";
     private List<WorkOrder> workOrders = newArrayList();
     private SortedSet<ProjectYearBudget> budgets = Sets.newTreeSet(new ProjectYearBudget(2018, 500));
     private double hoursSpent = 0;
@@ -24,8 +24,8 @@ public final class ProjectTestBuilder {
         return new ProjectTestBuilder();
     }
 
-    public ProjectTestBuilder description(String description) {
-        this.description = description;
+    public ProjectTestBuilder name(String name) {
+        this.name = name;
         return this;
     }
 
@@ -50,7 +50,7 @@ public final class ProjectTestBuilder {
     }
 
     public Project build() {
-        Project project = new Project(description, workOrders, budgets);
+        Project project = new Project(name, workOrders, budgets);
         ReflectionTestUtils.setField(project, "hoursSpent", hoursSpent);
         return project;
     }

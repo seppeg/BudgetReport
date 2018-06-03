@@ -24,7 +24,7 @@ public class Project {
     @JoinColumn(name = "project_id", nullable = false)
     private Collection<WorkOrder> workOrders;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "project_id", nullable = false)
     @OrderBy("year")
     private SortedSet<ProjectYearBudget> budgets = new TreeSet<>();
@@ -58,5 +58,13 @@ public class Project {
     @Override
     public final int hashCode() {
         return Objects.hash(id);
+    }
+
+    public void update(String name, List<WorkOrder> workOrders, Set<ProjectYearBudget> budgets) {
+        this.name = name;
+        this.workOrders.clear();
+        this.workOrders.addAll(workOrders);
+        this.budgets.clear();
+        this.budgets.addAll(budgets);
     }
 }
