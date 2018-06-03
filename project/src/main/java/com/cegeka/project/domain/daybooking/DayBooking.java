@@ -49,9 +49,13 @@ public class DayBooking {
         return id.hashCode();
     }
 
-    public DayBooking addHours(double hours) {
+    public void addHours(double hours) {
         checkArgument(hours > 0);
         this.hours += hours;
-        return this;
+    }
+
+    public void subtractHours(double hours) {
+        checkArgument(hours > 0 && hours <= this.hours);
+        this.hours -= hours;
     }
 }

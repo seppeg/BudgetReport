@@ -23,7 +23,7 @@ public class Project {
 
     private String name;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", nullable = false)
     private Collection<WorkOrder> workOrders;
 

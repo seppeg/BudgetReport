@@ -7,13 +7,13 @@ import org.springframework.messaging.SubscribableChannel;
 
 public interface ProjectStreams {
 
-    String INPUT = "booking-in";
+    String BOOKING_CHANNEL_IN = "booking-in";
 
-    @Input(INPUT)
+    @Input(BOOKING_CHANNEL_IN)
     SubscribableChannel inboundProjects();
 
-    String OUTPUT = "project-out";
+    String PROJECT_CHANNEL_OUT = "project-out";
 
-    @Output(OUTPUT)
+    @Output(PROJECT_CHANNEL_OUT)
     MessageChannel outboundProjects();
 }
