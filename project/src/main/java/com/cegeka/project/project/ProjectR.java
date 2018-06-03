@@ -1,6 +1,6 @@
-package com.cegeka.project.controller;
+package com.cegeka.project.project;
 
-import com.cegeka.project.domain.project.Project;
+import com.cegeka.project.workorder.WorkOrderR;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 

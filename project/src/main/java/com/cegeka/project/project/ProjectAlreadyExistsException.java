@@ -1,4 +1,4 @@
-package com.cegeka.project.service;
+package com.cegeka.project.project;
 
 import lombok.AllArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.cegeka.project.util;
+package com.cegeka.project.infrastructure;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;

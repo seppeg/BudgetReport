@@ -1,4 +1,4 @@
-package com.cegeka.project.domain.workorder;
+package com.cegeka.project.workorder;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

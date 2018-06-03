@@ -1,9 +1,7 @@
-package com.cegeka.project.controller;
+package com.cegeka.project.project;
 
-import com.cegeka.project.domain.daybooking.MonthlyWorkOrderBookingView;
-import com.cegeka.project.service.ProjectAlreadyExistsException;
-import com.cegeka.project.service.ProjectBookingService;
-import com.cegeka.project.service.ProjectService;
+import com.cegeka.project.booking.MonthlyWorkOrderBookingView;
+import com.cegeka.project.booking.ProjectBookingService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;

@@ -1,9 +1,9 @@
 package com.cegeka.project.domain;
 
-import com.cegeka.project.domain.project.Project;
-import com.cegeka.project.domain.project.ProjectRepository;
-import com.cegeka.project.domain.workorder.WorkOrder;
 import com.cegeka.project.infrastructure.ZookeeperFacade;
+import com.cegeka.project.project.Project;
+import com.cegeka.project.project.ProjectRepository;
+import com.cegeka.project.workorder.WorkOrder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package com.cegeka.project.domain.daybooking;
+package com.cegeka.project.booking;
 
-import com.cegeka.project.domain.workorder.WorkOrder;
+import com.cegeka.project.workorder.WorkOrder;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

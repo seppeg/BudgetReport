@@ -1,7 +1,7 @@
 package com.cegeka.project.domain;
 
-import com.cegeka.project.domain.project.Project;
-import com.cegeka.project.domain.workorder.WorkOrder;
+import com.cegeka.project.project.Project;
+import com.cegeka.project.workorder.WorkOrder;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.cegeka.project.service;
+package com.cegeka.project.workorder;
 
 import com.cegeka.project.infrastructure.ZookeeperFacade;
 import lombok.AllArgsConstructor;
@@ -23,14 +23,14 @@ public class WorkOrderTracker {
         if (this.zookeeperFacade.zNodeExists(WORKORDER_CONFIG_ZNODE)) {
             addWorkOrdersToAlreadyTrackedWorkOrders(WORKORDER_CONFIG_ZNODE, workOrders);
         } else {
-            zookeeperFacade.createZNode(WORKORDER_CONFIG_ZNODE, toString(workOrders));
+            zookeeperFacade.createZNode(WORKORDER_CONFIG_ZNODE, serializeWorkOrders(workOrders));
         }
     }
 
     private void addWorkOrdersToAlreadyTrackedWorkOrders(String path, Collection<String> workOrders) {
         Set<String> currentlyTrackedWorkOrders = fetchTrackedWorkOrders();
         currentlyTrackedWorkOrders.addAll(workOrders);
-        String newTrackedWorkOrders = toString(currentlyTrackedWorkOrders);
+        String newTrackedWorkOrders = serializeWorkOrders(currentlyTrackedWorkOrders);
         if (!newTrackedWorkOrders.isEmpty()) {
             this.zookeeperFacade.setZNodeValue(path, newTrackedWorkOrders);
         }
@@ -44,7 +44,7 @@ public class WorkOrderTracker {
                 : newHashSet(splittedOrders);
     }
 
-    private String toString(Collection<String> workOrders) {
+    private String serializeWorkOrders(Collection<String> workOrders) {
         return workOrders.stream().collect(joining(","));
     }
 

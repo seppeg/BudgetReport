@@ -1,4 +1,4 @@
-package com.cegeka.project.domain.daybooking;
+package com.cegeka.project.booking;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

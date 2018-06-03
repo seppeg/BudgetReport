@@ -1,7 +1,5 @@
-package com.cegeka.project.service;
+package com.cegeka.project.booking;
 
-import com.cegeka.project.domain.daybooking.MonthlyWorkOrderBookingRepository;
-import com.cegeka.project.domain.daybooking.MonthlyWorkOrderBookingView;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

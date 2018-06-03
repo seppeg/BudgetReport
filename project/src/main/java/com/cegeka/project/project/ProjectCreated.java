@@ -1,7 +1,6 @@
-package com.cegeka.project.event;
+package com.cegeka.project.project;
 
-import com.cegeka.project.controller.ProjectR;
-import com.cegeka.project.controller.WorkOrderR;
+import com.cegeka.project.workorder.WorkOrderR;
 import lombok.*;
 
 import java.util.List;

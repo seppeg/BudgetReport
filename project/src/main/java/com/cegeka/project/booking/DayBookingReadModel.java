@@ -1,9 +1,7 @@
-package com.cegeka.project.domain.daybooking;
+package com.cegeka.project.booking;
 
-import com.cegeka.project.domain.workorder.WorkOrder;
-import com.cegeka.project.domain.workorder.WorkOrderRepository;
-import com.cegeka.project.event.BookingCreated;
-import com.cegeka.project.event.BookingDeleted;
+import com.cegeka.project.workorder.WorkOrder;
+import com.cegeka.project.workorder.WorkOrderRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.event.EventListener;

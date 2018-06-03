@@ -1,13 +1,10 @@
-package com.cegeka.project.service;
+package com.cegeka.project.project;
 
-import com.cegeka.project.controller.ProjectR;
-import com.cegeka.project.controller.WorkOrderR;
-import com.cegeka.project.domain.project.Project;
-import com.cegeka.project.domain.project.ProjectRepository;
-import com.cegeka.project.domain.workorder.WorkOrder;
-import com.cegeka.project.domain.workorder.WorkOrderRepository;
-import com.cegeka.project.event.ProjectCreated;
 import com.cegeka.project.infrastructure.ProjectStreams;
+import com.cegeka.project.workorder.WorkOrder;
+import com.cegeka.project.workorder.WorkOrderR;
+import com.cegeka.project.workorder.WorkOrderRepository;
+import com.cegeka.project.workorder.WorkOrderTracker;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.Message;

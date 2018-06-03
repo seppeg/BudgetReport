@@ -1,7 +1,7 @@
-package com.cegeka.project.domain.project;
+package com.cegeka.project.project;
 
-import com.cegeka.project.event.BookingCreated;
-import com.cegeka.project.event.BookingDeleted;
+import com.cegeka.project.booking.BookingCreated;
+import com.cegeka.project.booking.BookingDeleted;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.event.EventListener;

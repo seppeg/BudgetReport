@@ -1,8 +1,11 @@
 package com.cegeka.project.domain.project;
 
-import com.cegeka.project.domain.workorder.WorkOrder;
-import com.cegeka.project.event.BookingCreated;
+import com.cegeka.project.booking.BookingCreated;
 import com.cegeka.project.event.BookingDeletedTestBuilder;
+import com.cegeka.project.project.Project;
+import com.cegeka.project.project.ProjectReadModel;
+import com.cegeka.project.project.ProjectRepository;
+import com.cegeka.project.workorder.WorkOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

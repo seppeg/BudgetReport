@@ -1,10 +1,10 @@
 package com.cegeka.project.domain;
 
-import com.cegeka.project.domain.daybooking.DayBooking;
-import com.cegeka.project.domain.daybooking.DayBookingRepository;
-import com.cegeka.project.domain.project.ProjectRepository;
-import com.cegeka.project.domain.workorder.WorkOrder;
+import com.cegeka.project.booking.DayBooking;
+import com.cegeka.project.booking.DayBookingRepository;
 import com.cegeka.project.infrastructure.ZookeeperFacade;
+import com.cegeka.project.project.ProjectRepository;
+import com.cegeka.project.workorder.WorkOrder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

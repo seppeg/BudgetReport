@@ -1,7 +1,7 @@
-package com.cegeka.project;
+package com.cegeka.project.infrastructure;
 
-import com.cegeka.project.event.BookingCreated;
-import com.cegeka.project.event.BookingDeleted;
+import com.cegeka.project.booking.BookingCreated;
+import com.cegeka.project.booking.BookingDeleted;
 import org.apache.kafka.common.header.Headers;
 import org.springframework.kafka.support.converter.DefaultJackson2JavaTypeMapper;
 import org.springframework.kafka.support.serializer.JsonDeserializer;

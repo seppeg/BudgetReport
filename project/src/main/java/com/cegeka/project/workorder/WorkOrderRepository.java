@@ -1,4 +1,4 @@
-package com.cegeka.project.domain.workorder;
+package com.cegeka.project.workorder;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,5 +1,7 @@
 package com.cegeka.project.event;
 
+import com.cegeka.project.project.ProjectCreated;
+
 import java.util.List;
 import java.util.UUID;
 
