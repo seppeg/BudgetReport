@@ -11,6 +11,6 @@ import java.util.UUID;
 public interface DayBookingRepository extends JpaRepository<DayBooking, UUID> {
 
 
-    Optional<DayBooking> findByDateAndWorkOrder(LocalDate date, String workOrder);
+    Optional<DayBooking> findByDateAndWorkOrderWorkOrder(LocalDate date, String workOrder);
 
 }

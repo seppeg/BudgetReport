@@ -1,0 +1,1 @@
+ALTER TABLE day_booking DROP COLUMN work_order;

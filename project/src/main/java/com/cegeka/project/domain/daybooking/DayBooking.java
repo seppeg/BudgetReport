@@ -1,5 +1,6 @@
 package com.cegeka.project.domain.daybooking;
 
+import com.cegeka.project.domain.workorder.WorkOrder;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,8 @@ import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -23,11 +26,13 @@ public class DayBooking {
 
     private LocalDate date;
 
-    private String workOrder;
+    @OneToOne
+    @JoinColumn(name = "work_order_id", nullable = false)
+    private WorkOrder workOrder;
 
     private double hours;
 
-    public DayBooking(LocalDate date, String workOrder, double hours){
+    public DayBooking(LocalDate date, WorkOrder workOrder, double hours){
         this.id = UUID.randomUUID();
         this.date = date;
         this.workOrder = workOrder;

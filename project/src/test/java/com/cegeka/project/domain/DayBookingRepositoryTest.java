@@ -40,12 +40,12 @@ class DayBookingRepositoryTest {
         projectRepository.save(project()
                 .workorder(workOrder)
                 .build());
-        dayBookingRepository.save(new DayBooking(LocalDate.of(2018, 1, 1), "COCFL871.004", 2));
+        dayBookingRepository.save(new DayBooking(LocalDate.of(2018, 1, 1), workOrder, 2));
 
-        Optional<DayBooking> result = dayBookingRepository.findByDateAndWorkOrder(LocalDate.of(2018, 1, 1), "COCFL871.004");
+        Optional<DayBooking> result = dayBookingRepository.findByDateAndWorkOrderWorkOrder(LocalDate.of(2018, 1, 1), "COCFL871.004");
 
         assertThat(result.get())
                 .extracting(DayBooking::getWorkOrder, DayBooking::getDate, DayBooking::getHours)
-                .containsExactly("COCFL871.004", LocalDate.of(2018, 1, 1), 2D);
+                .containsExactly(workOrder, LocalDate.of(2018, 1, 1), 2D);
     }
 }
