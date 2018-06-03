@@ -15,9 +15,11 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 @Log4j2
 @Service
@@ -44,7 +46,11 @@ public class ProjectService {
                 .map(workOrder -> workOrderRepository.findByWorkOrder(workOrder)
                         .orElseGet(() -> new WorkOrder(workOrder)))
                 .collect(toList());
-        Project project = projectRepository.save(new Project(projectR.getName(), workOrders, projectR.getBudget()));
+        Set<ProjectYearBudget> budgets = projectR.getBudgets()
+                .stream()
+                .map(b -> new ProjectYearBudget(b.getYear(), b.getBudget()))
+                .collect(toSet());
+        Project project = projectRepository.save(new Project(projectR.getName(), workOrders, budgets));
         ProjectCreated projectCreated = new ProjectCreated(projectR);
         raiseEvent(projectCreated);
         workOrderTracker.trackWorkOrders(projectCreated.getWorkOrders());

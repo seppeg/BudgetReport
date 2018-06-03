@@ -7,7 +7,7 @@
                 [customColors]=""
                 [results]="[{
                     name: project.description,
-                    value: project.hoursSpent / project.budget * 100
+                    value: project.hoursSpent / project.budgets[0].year * 100
                 }]"
                 [valueFormatting]=""
                 [min]="0"
@@ -19,7 +19,7 @@
         <p>
             {{project.description}}
             <br>
-            {{project.hoursSpent}} / {{project.budget}}
+            {{project.hoursSpent}} / {{project.budgets[0].year}}
         </p>
     </div>
 </div>

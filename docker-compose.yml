@@ -25,7 +25,7 @@ services:
 
   #databases
   bookingdb:
-    image: postgres:10.3
+    build: postgresql
     networks:
      - booking_backend
     ports:
@@ -39,7 +39,7 @@ services:
       - booking_data:/var/lib/postgresql/data
 
   projectdb:
-      image: postgres:10.3
+      build: postgresql
       networks:
        - project_backend
       ports:

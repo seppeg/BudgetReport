@@ -6,6 +6,7 @@ import com.cegeka.project.workorder.WorkOrder;
 import com.cegeka.project.workorder.WorkOrderR;
 import com.cegeka.project.workorder.WorkOrderRepository;
 import com.cegeka.project.workorder.WorkOrderTracker;
+import org.assertj.core.util.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,6 +23,7 @@ import java.util.Optional;
 import static com.cegeka.project.controller.ProjectRTestBuilder.projectR;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
@@ -60,7 +62,7 @@ class ProjectServiceTest {
         when(projectStreams.outboundProjects()).thenReturn(messageChannel);
         when(workOrderRepository.findByWorkOrder("workorder")).thenReturn(Optional.of(new WorkOrder("workorder")));
         ProjectR project = projectR()
-                .budget(5)
+                .budget(Sets.newTreeSet(new ProjectYearBudgetR(2018, 5)))
                 .name("desc")
                 .workorder(singletonList(new WorkOrderR("workorder")))
                 .build();
@@ -72,7 +74,7 @@ class ProjectServiceTest {
         ArgumentCaptor<Project> projectArgumentCaptor = ArgumentCaptor.forClass(Project.class);
         verify(projectRepository).save(projectArgumentCaptor.capture());
         Project savedProject = projectArgumentCaptor.getValue();
-        assertThat(savedProject.getBudget()).isEqualTo(5D);
+        assertThat(savedProject.getBudgets()).extracting(ProjectYearBudget::getYear, ProjectYearBudget::getBudget).containsExactly(tuple(2018, 5D));
         assertThat(savedProject.getName()).isEqualTo("desc");
         assertThat(savedProject.getWorkOrders()).extracting(WorkOrder::getWorkOrder).containsExactly("workorder");
 
@@ -82,7 +84,7 @@ class ProjectServiceTest {
         assertThat(payload).isInstanceOf(ProjectCreated.class);
         ProjectCreated projectCreated = (ProjectCreated) payload;
         assertThat(projectCreated.getName()).isEqualTo("desc");
-        assertThat(projectCreated.getBudget()).isEqualTo(5D);
+        assertThat(projectCreated.getBudgets()).extracting(ProjectYearBudgetR::getYear, ProjectYearBudgetR::getBudget).containsExactly(tuple(2018, 5D));
         assertThat(projectCreated.getWorkOrders()).containsExactly("workorder");
     }
 }

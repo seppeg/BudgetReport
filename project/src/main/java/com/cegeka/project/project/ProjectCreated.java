@@ -4,6 +4,7 @@ import com.cegeka.project.workorder.WorkOrderR;
 import lombok.*;
 
 import java.util.List;
+import java.util.SortedSet;
 import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
@@ -18,12 +19,12 @@ public class ProjectCreated {
     private UUID id;
     private String name;
     private List<String> workOrders;
-    private double budget;
+    private SortedSet<ProjectYearBudgetR> budgets;
 
     public ProjectCreated(ProjectR projectR){
         this.id = UUID.randomUUID();
         this.name = projectR.getName();
-        this.budget = projectR.getBudget();
+        this.budgets = projectR.getBudgets();
         this.workOrders = projectR.getWorkOrders().stream().map(WorkOrderR::getWorkOrder).collect(toList());
     }
 }

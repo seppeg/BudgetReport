@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @ToString
@@ -27,24 +24,23 @@ public class Project {
     @JoinColumn(name = "project_id", nullable = false)
     private Collection<WorkOrder> workOrders;
 
-    private double budget;
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "project_id", nullable = false)
+    @OrderBy("year")
+    private SortedSet<ProjectYearBudget> budgets = new TreeSet<>();
 
     private double hoursSpent;
 
-    public Project(String name, Collection<WorkOrder> workOrders, double budget) {
+    public Project(String name, Collection<WorkOrder> workOrders, Set<ProjectYearBudget> budgets) {
         this.id = UUID.randomUUID();
         this.workOrders = workOrders;
         this.name = name;
         this.hoursSpent = 0;
-        this.budget = budget;
+        this.budgets.addAll(budgets);
     }
 
     public void addHoursSpent(double hoursSpent) {
         this.hoursSpent += hoursSpent;
-    }
-
-    public Optional<WorkOrder> getWorkOrder(String workOrder){
-        return getWorkOrders().stream().filter(w -> w.getWorkOrder().equals(workOrder)).findFirst();
     }
 
     public void removeHoursSpent(double hours) {

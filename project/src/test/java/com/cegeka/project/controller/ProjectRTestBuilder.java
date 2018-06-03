@@ -1,16 +1,18 @@
 package com.cegeka.project.controller;
 
 import com.cegeka.project.project.ProjectR;
+import com.cegeka.project.project.ProjectYearBudgetR;
 import com.cegeka.project.workorder.WorkOrderR;
 
 import java.util.List;
+import java.util.SortedSet;
 import java.util.UUID;
 
 public final class ProjectRTestBuilder {
     private UUID projectId;
     private String name;
     private List<WorkOrderR> workorder;
-    private double budget;
+    private SortedSet<ProjectYearBudgetR> budgets;
     private double hoursSpent;
 
     private ProjectRTestBuilder() {
@@ -30,8 +32,8 @@ public final class ProjectRTestBuilder {
         return this;
     }
 
-    public ProjectRTestBuilder budget(double budget) {
-        this.budget = budget;
+    public ProjectRTestBuilder budget(SortedSet<ProjectYearBudgetR> budget) {
+        this.budgets = budget;
         return this;
     }
 
@@ -46,6 +48,6 @@ public final class ProjectRTestBuilder {
     }
 
     public ProjectR build() {
-        return new ProjectR(projectId, name, workorder, budget, hoursSpent);
+        return new ProjectR(projectId, name, workorder, budgets, hoursSpent);
     }
 }

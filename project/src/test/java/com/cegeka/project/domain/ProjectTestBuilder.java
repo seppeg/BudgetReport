@@ -1,17 +1,20 @@
 package com.cegeka.project.domain;
 
 import com.cegeka.project.project.Project;
+import com.cegeka.project.project.ProjectYearBudget;
 import com.cegeka.project.workorder.WorkOrder;
+import org.assertj.core.util.Sets;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
+import java.util.SortedSet;
 
 import static com.google.common.collect.Lists.newArrayList;
 
 public final class ProjectTestBuilder {
     private String description = "description";
     private List<WorkOrder> workOrders = newArrayList();
-    private double budget = 500;
+    private SortedSet<ProjectYearBudget> budgets = Sets.newTreeSet(new ProjectYearBudget(2018, 500));
     private double hoursSpent = 0;
 
     private ProjectTestBuilder() {
@@ -36,8 +39,8 @@ public final class ProjectTestBuilder {
         return this;
     }
 
-    public ProjectTestBuilder budget(double budget) {
-        this.budget = budget;
+    public ProjectTestBuilder budget(SortedSet<ProjectYearBudget> budget) {
+        this.budgets = budget;
         return this;
     }
 
@@ -47,7 +50,7 @@ public final class ProjectTestBuilder {
     }
 
     public Project build() {
-        Project project = new Project(description, workOrders, budget);
+        Project project = new Project(description, workOrders, budgets);
         ReflectionTestUtils.setField(project, "hoursSpent", hoursSpent);
         return project;
     }
