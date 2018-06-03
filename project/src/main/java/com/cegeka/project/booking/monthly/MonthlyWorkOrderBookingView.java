@@ -1,4 +1,4 @@
-package com.cegeka.project.booking;
+package com.cegeka.project.booking.monthly;
 
 import lombok.*;
 import org.hibernate.annotations.Columns;

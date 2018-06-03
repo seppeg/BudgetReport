@@ -1,15 +1,11 @@
 package com.cegeka.project.project;
 
-import com.cegeka.project.infrastructure.ProjectStreams;
 import com.cegeka.project.workorder.WorkOrder;
 import com.cegeka.project.workorder.WorkOrderR;
 import com.cegeka.project.workorder.WorkOrderRepository;
-import com.cegeka.project.workorder.WorkOrderTracker;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,40 +24,42 @@ import static java.util.stream.Collectors.toSet;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final ProjectStreams projectStreams;
-    private final WorkOrderTracker workOrderTracker;
     private final WorkOrderRepository workOrderRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     public Collection<Project> getAllProjects() {
         return projectRepository.findAll();
     }
 
     public ProjectR createProject(ProjectR projectR) throws ProjectAlreadyExistsException {
+        validateProjectName(projectR);
+        List<WorkOrder> workOrders = findOrCreateWorkOrders(projectR);
+        Set<ProjectYearBudget> budgets = createBudgets(projectR);
+        Project project = projectRepository.save(new Project(projectR.getName(), workOrders, budgets));
+        eventPublisher.publishEvent(new ProjectCreated(projectR));
+        return new ProjectR(project);
+    }
+
+    private void validateProjectName(ProjectR projectR) throws ProjectAlreadyExistsException {
         if (projectRepository.existsProjectByName(projectR.getName())) {
             throw new ProjectAlreadyExistsException(projectR.getName());
         }
-        List<WorkOrder> workOrders = projectR.getWorkOrders()
+    }
+
+    private List<WorkOrder> findOrCreateWorkOrders(ProjectR projectR) {
+        return projectR.getWorkOrders()
                 .stream()
                 .map(WorkOrderR::getWorkOrder)
                 .map(workOrder -> workOrderRepository.findByWorkOrder(workOrder)
                         .orElseGet(() -> new WorkOrder(workOrder)))
                 .collect(toList());
-        Set<ProjectYearBudget> budgets = projectR.getBudgets()
+    }
+
+    private Set<ProjectYearBudget> createBudgets(ProjectR projectR) {
+        return projectR.getBudgets()
                 .stream()
                 .map(b -> new ProjectYearBudget(b.getYear(), b.getBudget()))
                 .collect(toSet());
-        Project project = projectRepository.save(new Project(projectR.getName(), workOrders, budgets));
-        ProjectCreated projectCreated = new ProjectCreated(projectR);
-        raiseEvent(projectCreated);
-        workOrderTracker.trackWorkOrders(projectCreated.getWorkOrders());
-        return new ProjectR(project);
-    }
-
-    private void raiseEvent(Object event) {
-        log.info("Raising event " + event);
-        MessageChannel messageChannel = projectStreams.outboundProjects();
-        Message<Object> message = MessageBuilder.withPayload(event).setHeader("type", event.getClass().getSimpleName()).build();
-        messageChannel.send(message);
     }
 
     public Collection<String> findProjectWorkOrders(UUID projectId) {

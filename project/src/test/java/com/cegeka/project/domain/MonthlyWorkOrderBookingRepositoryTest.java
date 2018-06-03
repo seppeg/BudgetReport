@@ -1,7 +1,7 @@
 package com.cegeka.project.domain;
 
-import com.cegeka.project.booking.MonthlyWorkOrderBookingRepository;
-import com.cegeka.project.booking.MonthlyWorkOrderBookingView;
+import com.cegeka.project.booking.monthly.MonthlyWorkOrderBookingRepository;
+import com.cegeka.project.booking.monthly.MonthlyWorkOrderBookingView;
 import com.cegeka.project.infrastructure.ZookeeperFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

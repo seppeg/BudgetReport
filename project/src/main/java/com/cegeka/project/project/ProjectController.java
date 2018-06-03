@@ -1,7 +1,7 @@
 package com.cegeka.project.project;
 
-import com.cegeka.project.booking.MonthlyWorkOrderBookingView;
 import com.cegeka.project.booking.ProjectBookingService;
+import com.cegeka.project.booking.monthly.MonthlyWorkOrderBookingView;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
