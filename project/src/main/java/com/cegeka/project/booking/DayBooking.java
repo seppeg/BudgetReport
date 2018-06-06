@@ -39,6 +39,16 @@ public class DayBooking {
         this.hours = hours;
     }
 
+    public void addHours(double hours) {
+        checkArgument(hours > 0);
+        this.hours += hours;
+    }
+
+    public void subtractHours(double hours) {
+        checkArgument(hours > 0 && hours <= this.hours);
+        this.hours -= hours;
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
@@ -52,15 +62,5 @@ public class DayBooking {
     @Override
     public final int hashCode() {
         return id.hashCode();
-    }
-
-    public void addHours(double hours) {
-        checkArgument(hours > 0);
-        this.hours += hours;
-    }
-
-    public void subtractHours(double hours) {
-        checkArgument(hours > 0 && hours <= this.hours);
-        this.hours -= hours;
     }
 }

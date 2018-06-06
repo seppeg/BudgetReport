@@ -1,10 +1,6 @@
 package com.cegeka.timeprovider;
 
-import java.time.Clock;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Calendar;
+import java.time.*;
 
 public class Timeprovider {
 
@@ -12,6 +8,15 @@ public class Timeprovider {
 
     public static LocalDate getNow(){
         return LocalDate.now(clock);
+    }
+
+
+    public static Year getCurrentYear(){
+        return Year.now(clock);
+    }
+
+    public static YearMonth getCurrentYearMonth(){
+        return YearMonth.now(clock);
     }
 
     public static void freezeTime(LocalDateTime now){

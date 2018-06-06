@@ -47,6 +47,14 @@ public class Project {
         this.hoursSpent -= hours;
     }
 
+    public void update(String name, List<WorkOrder> workOrders, Set<ProjectYearBudget> budgets) {
+        this.name = name;
+        this.workOrders.clear();
+        this.workOrders.addAll(workOrders);
+        this.budgets.clear();
+        this.budgets.addAll(budgets);
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
@@ -58,13 +66,5 @@ public class Project {
     @Override
     public final int hashCode() {
         return Objects.hash(id);
-    }
-
-    public void update(String name, List<WorkOrder> workOrders, Set<ProjectYearBudget> budgets) {
-        this.name = name;
-        this.workOrders.clear();
-        this.workOrders.addAll(workOrders);
-        this.budgets.clear();
-        this.budgets.addAll(budgets);
     }
 }

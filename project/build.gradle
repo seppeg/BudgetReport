@@ -29,7 +29,11 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     compile 'org.projectlombok:lombok'
 
+    compile 'org.aspectj:aspectjweaver'
+
     compile 'org.springframework.cloud:spring-cloud-starter-zookeeper-config:2.0.0.RC1'
+
+    compile project (':timeprovider-util')
 
     //persistence
     compile 'org.flywaydb:flyway-core'

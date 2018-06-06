@@ -1,7 +1,5 @@
 package com.cegeka.project.project;
 
-import com.cegeka.project.booking.ProjectBookingService;
-import com.cegeka.project.booking.monthly.MonthlyWorkOrderBookingView;
 import com.cegeka.project.infrastructure.UnexistingResourceException;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,10 +17,9 @@ import static java.util.stream.Collectors.toList;
 public class ProjectController {
 
     private final ProjectService projectService;
-    private final ProjectBookingService projectBookingService;
 
     @GetMapping("/project")
-    public Collection<ProjectR> getAll() {
+    public Collection<ProjectR> getProjects() {
         return projectService.getAllProjects()
                 .stream()
                 .map(ProjectR::new)
@@ -39,11 +36,5 @@ public class ProjectController {
     public Optional<ProjectR> updateProject(@PathVariable("projectId") UUID projectId, @RequestBody ProjectR projectR) throws UnexistingResourceException {
         projectService.updateProject(projectId, projectR);
         return projectService.findProject(projectId);
-    }
-
-    @GetMapping("/projectbooking/{projectId}")
-    public Collection<MonthlyWorkOrderBookingView> getMonthlyProjectBookings(@PathVariable("projectId") UUID projectId){
-        Collection<String> projectWorkOrders = projectService.findProjectWorkOrders(projectId);
-        return projectBookingService.getMonthlyWorkOrderBookings(projectWorkOrders);
     }
 }

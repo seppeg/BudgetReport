@@ -1,39 +1,61 @@
 package com.cegeka.project.booking.monthly;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import lombok.AllArgsConstructor;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Collection;
-import java.util.Optional;
+import java.util.List;
 
 @Repository
-public interface MonthlyWorkOrderBookingRepository extends JpaRepository<MonthlyWorkOrderBookingView, MonthlyWorkOrderBookingView.MonthlyWorkOrderBookingKey> {
+@AllArgsConstructor
+public class MonthlyWorkOrderBookingRepository {
 
-    Collection<MonthlyWorkOrderBookingView> findAllByYearMonthOrderByWorkOrder(YearMonth yearMonth);
+    private static final RowMapper<MonthlyWorkOrderBookingView> ROW_MAPPER = (rs, rowNum) -> {
+        String workOrder = rs.getString("work_order");
+        LocalDate yearMonth = rs.getDate("year_month").toLocalDate();
+        double hours = rs.getDouble("hours");
+        return new MonthlyWorkOrderBookingView(workOrder, YearMonth.from(yearMonth), hours);
+    };
 
-    Collection<MonthlyWorkOrderBookingView> findAllByWorkOrderOrderByYearMonth(String workOrder);
+    private final NamedParameterJdbcTemplate jdbc;
 
-    Collection<MonthlyWorkOrderBookingView> findAllByWorkOrderInOrderByYearMonth(Collection<String> workOrder);
+    public List<MonthlyWorkOrderBookingView> fetchMonthlyWorkOrderBookingView(String workOrder, LocalDate startDate, LocalDate endDate) {
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("workOrder", workOrder)
+                .addValue("startDate", startDate)
+                .addValue("endDate", endDate);
 
-    Optional<MonthlyWorkOrderBookingView> findByWorkOrderAndYearMonth(String workOrder, YearMonth yearMonth);
+        return jdbc.query("SELECT m.work_order, m.year_month, m.hours " +
+                "FROM monthly_work_order_bookings m " +
+                "WHERE m.work_order = :workOrder " +
+                "AND m.year_month >= :startDate " +
+                "AND m.year_month <= :endDate " +
+                "ORDER BY m.work_order, m.year_month", params, ROW_MAPPER);
+    }
 
-    Collection<MonthlyWorkOrderBookingView> findAllByWorkOrderInAndYearMonthOrderByWorkOrder(Collection<String> workOrder, YearMonth yearMonth);
+    public List<MonthlyWorkOrderBookingView> fetchMonthlyWorkOrdersBookingView(Collection<String> workOrders, LocalDate startDate, LocalDate endDate) {
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("workOrders", workOrders)
+                .addValue("startDate", startDate)
+                .addValue("endDate", endDate);
 
-    @Query("SELECT m FROM MonthlyWorkOrderBookingView m WHERE m.workOrder = :workOrder AND m.yearMonth.year = :year ORDER BY m.yearMonth.year, m.yearMonth.month")
-    Collection<MonthlyWorkOrderBookingView> findAllByWorkOrderAndYearOrderByYearMonth(@Param("workOrder") String workOrder, @Param("year") int year);
+        return jdbc.query("SELECT m.work_order, m.year_month, m.hours " +
+                "FROM monthly_work_order_bookings m " +
+                "WHERE m.work_order in (:workOrders) " +
+                "AND m.year_month >= :startDate " +
+                "AND m.year_month <= :endDate " +
+                "ORDER BY m.work_order, m.year_month", params, ROW_MAPPER);
+    }
 
-    @Query("SELECT m FROM MonthlyWorkOrderBookingView m WHERE m.workOrder in (:workOrder) AND m.yearMonth.year = :year ORDER BY m.workOrder, m.yearMonth.year, m.yearMonth.month")
-    Collection<MonthlyWorkOrderBookingView> findAllByWorkOrderInAndYearOrderByWorkOrderAndYearMonth(@Param("workOrder") Collection<String> workOrder, @Param("year") int year);
-
-    @Query("SELECT m FROM MonthlyWorkOrderBookingView m WHERE m.yearMonth.year = :year ORDER BY m.workOrder, m.yearMonth.year, m.yearMonth.month")
-    Collection<MonthlyWorkOrderBookingView> findAllByYearOrderByWorkOrderAndYearMonth(@Param("year") int year);
-
-    @Modifying
-    @Query(value = "REFRESH MATERIALIZED VIEW monthly_work_order_bookings", nativeQuery = true)
-    void refreshMonthlyWorkOrderBookings();
+    public void refreshView(){
+        jdbc.update("REFRESH MATERIALIZED VIEW monthly_work_order_bookings", EmptySqlParameterSource.INSTANCE);
+    }
 
 }
