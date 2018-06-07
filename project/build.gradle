@@ -19,6 +19,14 @@ repositories {
     maven { url "https://repo.spring.io/milestone" }
 }
 
+test {
+    useJUnitPlatform {
+        excludeTags 'persistence'
+        includeEngines 'junit-jupiter'
+    }
+    failFast = false
+}
+
 dependencies {
     compile 'org.springframework:spring-web'
     compile 'org.springframework:spring-webflux'
@@ -42,7 +50,6 @@ dependencies {
     compile 'org.hibernate:hibernate-core'
     compile 'com.zaxxer:HikariCP'
     compile 'org.postgresql:postgresql'
-    testCompile 'com.h2database:h2'
 
     //cloud stream
     compile "org.springframework.cloud:spring-cloud-stream-binder-kafka:${springCloudStreamVersion}"
@@ -68,4 +75,5 @@ dependencies {
     testCompile 'org.hamcrest:hamcrest-core'
     testCompile 'org.hamcrest:hamcrest-library'
     testCompile 'org.mockito:mockito-junit-jupiter:2.18.3'
+    testCompile 'org.testcontainers:postgresql:1.7.3'
 }
