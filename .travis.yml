@@ -1,6 +1,9 @@
 language: java
 jdk:
 - oraclejdk9
+sudo: required
+services:
+  - docker
 os:
 - linux
 before_cache:
