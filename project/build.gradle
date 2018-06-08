@@ -25,6 +25,15 @@ test {
         includeEngines 'junit-jupiter'
     }
     failFast = false
+
+    reports {
+        html.enabled = true
+    }
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
 }
 
 dependencies {
