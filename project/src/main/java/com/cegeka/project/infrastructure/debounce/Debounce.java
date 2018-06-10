@@ -11,4 +11,5 @@ import java.lang.annotation.*;
 public @interface Debounce {
 
     long delay() default 400L;
+    boolean interrupt() default false;
 }

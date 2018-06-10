@@ -18,14 +18,14 @@ public class DebounceAspect {
     public void around(ProceedingJoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         String debounceKey = signature.getDeclaringTypeName() + "." + signature.getName();
-        long delay = signature.getMethod().getAnnotation(Debounce.class).delay();
+        Debounce annotation = signature.getMethod().getAnnotation(Debounce.class);
         debouncer.debounce(debounceKey, () -> {
             try {
                 joinPoint.proceed();
             }catch (Throwable e){
                 log.error(() -> "Exception thrown by debounced method: "+debounceKey, e);
             }
-        }, delay);
+        }, annotation.delay(), annotation.interrupt());
     }
 
 }
