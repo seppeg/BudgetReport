@@ -13,6 +13,7 @@ targetCompatibility = 1.9
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 test {
@@ -22,12 +23,6 @@ test {
     }
 
     failFast = false
-}
-
-configurations {
-    compile.exclude group: "ch.qos.logback", module: "logback-classic"
-    compile.exclude group: "org.apache.logging.log4j", module: "log4j-to-slf4j"
-    compile.exclude group: "org.slf4j", module: "jul-to-slf4j"
 }
 
 ext['hikaricp.version'] = '3.1.0'
@@ -52,12 +47,6 @@ dependencies {
     compile 'org.synchronoss.cloud:nio-multipart-parser'
     compile 'org.hibernate.validator:hibernate-validator'
 
-    //logging"
-    compile "org.apache.logging.log4j:log4j-slf4j-impl"
-    compile "org.apache.logging.log4j:log4j-api"
-    compile "org.apache.logging.log4j:log4j-core"
-    compile "org.apache.logging.log4j:log4j-jcl"
-
     //actuator
     compile 'org.springframework.boot:spring-boot-actuator-autoconfigure'
     compile 'io.micrometer:micrometer-core'
@@ -66,6 +55,7 @@ dependencies {
     compile "org.springframework.cloud:spring-cloud-stream-binder-kafka:${springCloudStreamVersion}"
     compile "org.springframework.cloud:spring-cloud-stream:${springCloudStreamVersion}"
     testCompile "org.springframework.cloud:spring-cloud-stream-test-support:${springCloudStreamVersion}"
+    compile "org.springframework.cloud:spring-cloud-starter-sleuth:2.0.0.RC2"
 
     //jackson
     compile 'com.fasterxml.jackson.core:jackson-databind'

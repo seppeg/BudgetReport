@@ -64,6 +64,7 @@ dependencies {
     compile "org.springframework.cloud:spring-cloud-stream-binder-kafka:${springCloudStreamVersion}"
     compile "org.springframework.cloud:spring-cloud-stream:${springCloudStreamVersion}"
     testCompile "org.springframework.cloud:spring-cloud-stream-test-support:${springCloudStreamVersion}"
+    compile "org.springframework.cloud:spring-cloud-starter-sleuth:2.0.0.RC2"
 
     //jackson
     compile 'com.fasterxml.jackson.core:jackson-databind'
