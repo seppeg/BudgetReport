@@ -28,6 +28,8 @@ dependencies {
     compile "org.springframework.cloud:spring-cloud-starter-zookeeper-config:2.0.0.RC1"
     compile "org.springframework.cloud:spring-cloud-starter-sleuth:2.0.0.RC2"
 
+    compile "net.logstash.logback:logstash-logback-encoder:5.1"
+
     compile project (':timeprovider-util')
 
     test.useJUnitPlatform()

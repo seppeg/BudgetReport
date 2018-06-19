@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 services:
   #kafka/zookeeper for storing events
@@ -22,6 +22,55 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     env_file:
       - kafka.env
+
+  #ELK stack
+  logstash:
+    image: budgetreport/logstash:v1
+    container_name: logstash
+    ports:
+     - "5000:5000"
+    networks:
+     - backend
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.2
+    container_name: elasticsearch
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    mem_limit: 2g
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - backend
+    labels:
+      - "traefik.frontend.rule=Host:es.localhost"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.2
+    container_name: kibana
+    environment:
+     - ELASTICSEARCH_URL=http://elasticsearch:9200
+    ports:
+     - "5601:5601"
+    networks:
+      - backend
+    labels:
+      - "traefik.frontend.rule=Host:kibana.localhost"
 
   #databases
   bookingdb:
@@ -130,6 +179,7 @@ volumes:
   booking_data:
   project_data:
   zookeeper_data:
+  esdata1:
 
 networks:
   frontend:
