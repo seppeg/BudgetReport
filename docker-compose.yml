@@ -72,6 +72,48 @@ services:
     labels:
       - "traefik.frontend.rule=Host:kibana.localhost"
 
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    # Environment settings are defined here https://github.com/openzipkin/zipkin/tree/1.19.0/zipkin-server#environment-variables
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      # Point the zipkin at the storage backend
+      - ES_HOSTS=elasticsearch
+      # Uncomment to enable scribe
+      # - SCRIBE_ENABLED=true
+      # Uncomment to enable self-tracing
+      # - SELF_TRACING_ENABLED=true
+      # Uncomment to enable debug logging
+      # - JAVA_OPTS=-Dlogging.level.zipkin=DEBUG -Dlogging.level.zipkin2=DEBUG
+    ports:
+      # Port used for the Zipkin UI and HTTP Api
+      - 9411:9411
+      # Uncomment if you set SCRIBE_ENABLED=true
+      # - 9410:9410
+    depends_on:
+     - elasticsearch
+    networks:
+      - backend
+    labels:
+      - "traefik.frontend.rule=Host:zipkin.localhost"
+
+  dependencies:
+    image: openzipkin/zipkin-dependencies
+    container_name: dependencies
+    entrypoint: crond -f
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - ES_HOSTS=elasticsearch
+      # Uncomment to see dependency processing logs
+      # - ZIPKIN_LOG_LEVEL=DEBUG
+      # Uncomment to adjust memory used by the dependencies job
+      # - JAVA_OPTS=-verbose:gc -Xms1G -Xmx1G
+    depends_on:
+     - elasticsearch
+    networks:
+      - backend
+
   #databases
   bookingdb:
     build: postgresql
@@ -104,7 +146,7 @@ services:
   #reverse proxy & load balancer
   traefik:
     image: traefik
-    command: --api --docker --docker.domain=localhost --logLevel="DEBUG" --accesslogsfile=/dev/stdout
+    command: --api --docker --docker.domain=localhost --logLevel="DEBUG" --accesslogsfile=/dev/stdout --tracing.backend=zipkin --tracing.zipkin.httpEndpoint="http://zipkin:9411/api/v1/spans"
     networks:
       - backend
       - frontend
@@ -138,6 +180,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:sqlserver://camis-prd-sql;database=Camis_mdb
       BOOKING_URL: http://booking:8081
       ZOOKEEPER_HOST: zookeeper:2181
+      ZIPKIN_URL: http://zipkin:9411
     labels:
      - "traefik.backend=camis"
      - "traefik.frontend.rule=Host:camis.localhost"
@@ -152,6 +195,7 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
       SPRING_DATASOURCE_URL: jdbc:postgresql://bookingdb:5432/bookingdb
+      ZIPKIN_URL: http://zipkin:9411
     env_file:
      - booking/credentials.env
     labels:
@@ -169,6 +213,7 @@ services:
       SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
       SPRING_DATASOURCE_URL: jdbc:postgresql://projectdb:5432/projectdb
       ZOOKEEPER_HOST: zookeeper:2181
+      ZIPKIN_URL: http://zipkin:9411
     env_file:
      - project/credentials.env
     labels:
