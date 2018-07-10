@@ -10,24 +10,30 @@ As is, it is mostly seen and correlated with by a collection of work orders, but
 
 ## TOBE
 
-A client should be able to define their projects in all kind of ways. The goal of this refactoring is to provide some standard ways to define a project (a collection of work orders, a certain prefix in the booking comment, ..) but also make it extensible so that bespoke project definitions are possible.
+A client should be able to define their projects in all kind of ways. The goal of this refactoring is to provide some standard ways to define a project (a collection of work orders, a certain prefix in the booking comment, ..) but also make it extensible so that bespoke project specifications are possible.
 
 ![TOBE](project_tobe.png "TOBE")
 
-A Project has a ProjectDefinition and a ProjectDefinition consists of various MatchingRules. When a booking matches with one of the rules in the ProjectDefinition, it is considered a booking for the Project.
+A Project has a ProjectSpecification and a ProjectSpecification consists of various MatchingRules. When a booking matches with one of the rules in the ProjectSpecification, it is considered a booking for the Project.
+
+Not only the way a project is defined is different for each client, the same thing applies to how each client defines their budgets. Budgets could be yearly but also quarterly or monthly. A ProjectBudget will consist of a Period and a budget in hours.
 
 
 
-* Creating a project (name, budgets)
-* Updating a project (name, budgets)
+* Creating a project
+* Updating a project (name, ..)
 * Removing a project
+* Adding budgets to project
+* Updating budget to project
+* Removing budgets from project
 * Adding matching rules to project
+* Updating matching rule from project
 * Removing matching rules from project
 * Existing features still work: budget used, monthly and yearly views
 
 
 
-The current Project microservice will no longer be a microservice on its own but will become a dependency. By adding this dependency to their own microservice, the available endpoints will be automatically added and configured, but the configuration will be stored in the database managed by the microservice.
+The Project microservice will be configuration driven. This means that each client can deploy its own microservice which is the same code but uses different configuration.
 
 ## Estimation
 Refactoring in 2 stories:
