@@ -28,3 +28,8 @@ A Project has a ProjectDefinition and a ProjectDefinition consists of various Ma
 
 
 The current Project microservice will no longer be a microservice on its own but will become a dependency. By adding this dependency to their own microservice, the available endpoints will be automatically added and configured, but the configuration will be stored in the database managed by the microservice.
+
+## Estimation
+Refactoring in 2 stories:
+Refactoring matching rules: 6md
+Refactoring ProjectBudgets: 2 md
