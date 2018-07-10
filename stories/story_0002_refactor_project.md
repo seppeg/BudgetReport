@@ -37,5 +37,6 @@ The Project microservice will be configuration driven. This means that each clie
 
 ## Estimation
 Refactoring in 2 stories:
-Refactoring matching rules: 6md
-Refactoring ProjectBudgets: 2 md
+
+* Refactoring matching rules: 6md
+* Refactoring ProjectBudgets: 2 md
