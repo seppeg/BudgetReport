@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+    id 'com.moowork.node' version '1.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+task uiBuild(type: NpmTask) {
+    args = ['run', 'build']
+}
+
+uiBuild.dependsOn npmInstall
