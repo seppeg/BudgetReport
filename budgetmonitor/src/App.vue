@@ -73,12 +73,7 @@ h1,h2,h3 {
   box-shadow: none;
   color: #666;
 }
-/*.navbar.navbar-absolute {*/
-  /*position: absolute;*/
-  /*width: 100%;*/
-  /*padding-top: 10px;*/
-  /*z-index: 1029;*/
-/*}*/
+
 .navbar {
   padding-bottom: .625rem;
   min-height: 53px;

@@ -19,7 +19,6 @@ export default class ProjectCard extends Vue {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped >
 
 .card {
@@ -29,7 +28,7 @@ export default class ProjectCard extends Vue {
   position: relative;
   width: 100%;
   margin-bottom: 20px;
-  box-shadow: 0 1px 15px 1px rgba(39, 39, 39, .1);
+  box-shadow: 0 1px 15px 1px rgba(36, 36, 36, .1);
 }
 
 .card .card-header:not([data-background-color]) {

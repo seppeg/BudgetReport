@@ -160,7 +160,7 @@ services:
      - /var/run/docker.sock:/var/run/docker.sock
 
   angular:
-    build: budget-report-ui
+    build: budgetmonitor
     networks:
       - frontend
     labels:
