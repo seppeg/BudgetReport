@@ -3,7 +3,7 @@
         <div>
             <div class="row">
                 <div class="col-lg-4" v-for="project in projects">
-                    <ProjectCard :msg="project.description"/>
+                    <ProjectCard :project="project"/>
                 </div>
             </div>
         </div>
@@ -18,34 +18,34 @@
 
     @Component({
         components: {
-            ProjectCard,
+            ProjectCard
         },
     })
     export default class Dashboard extends Vue {
-        // private projects = [
+        // private projects: Project[] = [
         //     {
         //         description: 'Java Guild',
         //         workorder: [],
-        //         budget: [{year: 2018, budget: 100}],
-        //         hoursSpent: 5,
+        //         budgets: [{year: 2018, budget: 1000}],
+        //         hoursSpent: 890,
         //     },
         //     {
-        //         description: 'Project Guild',
+        //         description: 'Architect Guild',
         //         workorder: [],
-        //         budget: [{year: 2018, budget: 100}],
-        //         hoursSpent: 7,
+        //         budgets: [{year: 2018, budget: 1300}],
+        //         hoursSpent: 1040,
         //     },
         //     {
         //         description: 'PM Guild',
         //         workorder: [],
-        //         budget: [{year: 2018, budget: 100}],
-        //         hoursSpent: 7,
+        //         budgets: [{year: 2018, budget: 1500}],
+        //         hoursSpent: 660,
         //     },
         //     {
-        //         description: 'Maintenance Guild',
+        //         description: 'Application Maintenance Guild',
         //         workorder: [],
-        //         budget: [{year: 2018, budget: 100}],
-        //         hoursSpent: 7,
+        //         budgets: [{year: 2018, budget: 900}],
+        //         hoursSpent: 333,
         //     },
         // ];
 
