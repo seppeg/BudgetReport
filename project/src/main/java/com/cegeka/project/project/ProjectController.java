@@ -20,21 +20,16 @@ public class ProjectController {
 
     @GetMapping("/project")
     public Collection<ProjectR> getProjects() {
-        return projectService.getAllProjects()
-                .stream()
-                .map(ProjectR::new)
-                .collect(toList());
+        return projectService.getAllProjects();
     }
 
     @PutMapping("/project")
-    public Optional<ProjectR> createProject(@RequestBody ProjectR projectR) throws ProjectAlreadyExistsException {
-        UUID projectId = projectService.createProject(projectR);
-        return projectService.findProject(projectId);
+    public ProjectR createProject(@RequestBody CreateProjectR projectR) throws ProjectAlreadyExistsException {
+        return projectService.createProject(projectR);
     }
 
     @PostMapping("/project/{projectId}")
-    public Optional<ProjectR> updateProject(@PathVariable("projectId") UUID projectId, @RequestBody ProjectR projectR) throws UnexistingResourceException {
-        projectService.updateProject(projectId, projectR);
-        return projectService.findProject(projectId);
+    public ProjectR updateProject(@PathVariable("projectId") UUID projectId, @RequestBody CreateProjectR projectR) throws UnexistingResourceException {
+        return projectService.updateProject(projectId, projectR);
     }
 }

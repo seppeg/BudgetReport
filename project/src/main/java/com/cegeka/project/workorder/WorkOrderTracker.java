@@ -1,9 +1,7 @@
 package com.cegeka.project.workorder;
 
 import com.cegeka.project.infrastructure.ZookeeperFacade;
-import com.cegeka.project.project.ProjectCreated;
 import lombok.AllArgsConstructor;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -21,10 +19,10 @@ public class WorkOrderTracker {
 
     private final ZookeeperFacade zookeeperFacade;
 
-    @EventListener
-    public void onProjectCreated(ProjectCreated event){
-        trackWorkOrders(event.getWorkOrders());
-    }
+//    @EventListener
+//    public void onProjectCreated(ProjectCreated event){
+//        trackWorkOrders(event.getWorkOrders());
+//    }
 
     public void trackWorkOrders(Collection<String> workOrders) {
         if (this.zookeeperFacade.zNodeExists(WORKORDER_CONFIG_ZNODE)) {

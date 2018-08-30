@@ -87,5 +87,5 @@ dependencies {
     testCompile 'org.hamcrest:hamcrest-core'
     testCompile 'org.hamcrest:hamcrest-library'
     testCompile 'org.mockito:mockito-junit-jupiter:2.18.3'
-    testCompile 'org.testcontainers:postgresql:1.7.3'
+    testCompile 'org.testcontainers:postgresql:1.8.3'
 }

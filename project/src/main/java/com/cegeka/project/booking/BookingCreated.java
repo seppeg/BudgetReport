@@ -12,7 +12,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookingCreated {
+public class BookingCreated implements BookingEvent {
 
     private UUID id;
     private String workOrder;
