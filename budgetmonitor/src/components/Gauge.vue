@@ -6,7 +6,7 @@
                 <path :d="filledArc" :fill="gaugeForegroundColor"/>
                 <circle :r="radius" cx="0" cy="0" :fill="gaugeNeedleColor"/>
                 <path :d="pointer" :fill="gaugeNeedleColor"/>
-                <text x="0" :y="2*radius+width*.05" text-anchor="middle" :font-size="width/15" :fill="gaugeTextColor">{{this.perc*100}}%</text>
+                <text x="0" :y="2*radius+width*.05" text-anchor="middle" :font-size="width/15" :fill="gaugeTextColor">{{Math.floor(this.perc*100)}}%</text>
             </g>
         </svg>
     </div>
@@ -41,10 +41,14 @@
         constructor() {
             super();
             this.pointer = '';
-            this.filledArc = null;
-            this.emptyArc = null;
+            this.filledArc = '';
+            this.emptyArc = '';
             this.len = 0;
             this.radius = 0;
+            this.gaugeBackgroundColor = '';
+            this.gaugeForegroundColor = '';
+            this.gaugeNeedleColor = '';
+            this.gaugeTextColor = '';
         }
 
         public created(): void {
@@ -67,12 +71,12 @@
             this.filledArc = arcGen({
                 startAngle: -Math.PI/2,
                 endAngle: -Math.PI/2+this.perc*Math.PI
-            } as DefaultArcObject);
+            } as DefaultArcObject) || '';
 
             this.emptyArc = arcGen({
                 startAngle: -Math.PI/2+this.perc*Math.PI+.025,
                 endAngle: Math.PI/2
-            } as DefaultArcObject);
+            } as DefaultArcObject) || '';
         }
 
         private recalcPointerPos(perc: number): string {

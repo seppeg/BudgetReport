@@ -4,10 +4,10 @@
             <h2 class="card-title">{{project.description}}</h2>
         </div>
         <div class="card-body">
-            <Gauge :width="300" :perc="(project.hoursSpent)/(project.budgets[0].budget)"/>
+            <Gauge :width="300" :perc="project.hoursSpent/project.budget"/>
         </div>
         <div class="card-footer">
-            <span><img src="../assets/clock.png" width="20px"/> {{project.hoursSpent}}/{{project.budgets[0].budget}}</span>
+            <span><img src="../assets/clock.png" width="20px"/> {{project.hoursSpent}}/{{project.budget}}</span>
         </div>
     </div>
 </template>
