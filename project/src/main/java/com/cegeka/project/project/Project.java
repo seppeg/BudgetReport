@@ -1,13 +1,14 @@
 package com.cegeka.project.project;
 
-import com.cegeka.project.workorder.WorkOrder;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @ToString
@@ -20,23 +21,15 @@ public class Project {
 
     private String name;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "project_id", nullable = false)
-    private Collection<WorkOrder> workOrders;
-
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "project_id", nullable = false)
-    @OrderBy("year")
-    private SortedSet<ProjectYearBudget> budgets = new TreeSet<>();
+    private double budget;
 
     private double hoursSpent;
 
-    public Project(String name, Collection<WorkOrder> workOrders, Set<ProjectYearBudget> budgets) {
+    public Project(String name, double budget) {
         this.id = UUID.randomUUID();
-        this.workOrders = workOrders;
         this.name = name;
+        this.budget = budget;
         this.hoursSpent = 0;
-        this.budgets.addAll(budgets);
     }
 
     public void addHoursSpent(double hoursSpent) {
@@ -47,12 +40,9 @@ public class Project {
         this.hoursSpent -= hours;
     }
 
-    public void update(String name, List<WorkOrder> workOrders, Set<ProjectYearBudget> budgets) {
+    public void update(String name, double budget) {
         this.name = name;
-        this.workOrders.clear();
-        this.workOrders.addAll(workOrders);
-        this.budgets.clear();
-        this.budgets.addAll(budgets);
+        this.budget = budget;
     }
 
     @Override

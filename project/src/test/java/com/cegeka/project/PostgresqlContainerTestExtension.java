@@ -16,9 +16,6 @@ public class PostgresqlContainerTestExtension implements AfterAllCallback, Befor
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        //"Expose daemon on tcp://localhost:2375 without TLS" must be checked.
-        System.setProperty("io.netty.noUnsafe", "true");
-        System.setProperty("org.testcontainers.shaded.io.netty.noUnsafe", "true");
         postgreSQLContainer = new PostgreSQLContainer("budgetreport/postgres:v1");
         postgreSQLContainer.start();
         System.setProperty("spring.datasource.url", postgreSQLContainer.getJdbcUrl());

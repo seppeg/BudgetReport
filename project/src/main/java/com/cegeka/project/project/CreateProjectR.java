@@ -7,10 +7,8 @@ import java.util.UUID;
 
 @Value
 @AllArgsConstructor
-public class ProjectR {
-    private final UUID id;
+public class CreateProjectR {
     private final String name;
     private final double budget;
-    private final double hoursSpent;
 
 }

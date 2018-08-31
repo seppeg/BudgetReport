@@ -1,11 +1,10 @@
 package com.cegeka.project.booking;
 
-import com.cegeka.project.workorder.WorkOrder;
-import com.cegeka.project.workorder.WorkOrderRepository;
+import com.cegeka.project.project.BookingEventProjectSpecificationMatcher;
+import com.cegeka.project.project.Project;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -14,8 +13,10 @@ import java.util.Optional;
 
 import static com.cegeka.project.event.BookingCreatedTestBuilder.bookingCreated;
 import static com.cegeka.project.event.BookingDeletedTestBuilder.bookingDeleted;
+import static com.cegeka.project.project.ProjectTestBuilder.project;
+import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,18 +28,17 @@ class DayBookingReadModelTest {
     private DayBookingRepository dayBookingRepository;
 
     @Mock
-    private WorkOrderRepository workOrderRepository;
+    private BookingEventProjectSpecificationMatcher matcher;
+
 
     @BeforeEach
     void setUp() {
-        readModel = new DayBookingReadModel(dayBookingRepository, workOrderRepository);
+        readModel = new DayBookingReadModel(matcher, dayBookingRepository);
     }
 
     @Test
-    void onBookingCreated_noBookingsAtDate_workOrderExists() {
-        WorkOrder workOrder = new WorkOrder("workOrder");
-        when(workOrderRepository.findByWorkOrder("workOrder")).thenReturn(Optional.of(workOrder));
-        when(dayBookingRepository.findByDateAndWorkOrderWorkOrder(LocalDate.of(2018, 1, 1), "workOrder")).thenReturn(Optional.empty());
+    void onBookingCreated_noBookingsAtDate_projectExists() {
+        Project project = project().build();
         BookingCreated event = bookingCreated()
                 .date(LocalDate.of(2018, 1, 1))
                 .workorder("workOrder")
@@ -46,16 +46,15 @@ class DayBookingReadModelTest {
                 .description("desc")
                 .employee("1")
                 .build();
+        when(matcher.getProjectsMatchingEvent(event)).thenReturn(singleton(project));
 
         readModel.on(event);
 
-        verify(dayBookingRepository).save(ArgumentMatchers.refEq(new DayBooking(LocalDate.of(2018, 1, 1), workOrder, 5D), "id"));
+        verify(dayBookingRepository).save(refEq(new DayBooking(LocalDate.of(2018, 1, 1), project.getId(), 5D), "id"));
     }
 
     @Test
-    void onBookingCreated_noBookingsAtDate_workOrderDoesNotExist() {
-        when(workOrderRepository.findByWorkOrder("workOrder")).thenReturn(Optional.empty());
-        when(dayBookingRepository.findByDateAndWorkOrderWorkOrder(LocalDate.of(2018, 1, 1), "workOrder")).thenReturn(Optional.empty());
+    void onBookingCreated_bookingsAtDate_projectExists() {
         BookingCreated event = bookingCreated()
                 .date(LocalDate.of(2018, 1, 1))
                 .workorder("workOrder")
@@ -63,22 +62,10 @@ class DayBookingReadModelTest {
                 .description("desc")
                 .employee("1")
                 .build();
-
-        assertThatThrownBy(() -> readModel.on(event)).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    void onBookingCreated_bookingsAtDate_workOrderExists() {
-        WorkOrder workOrder = new WorkOrder("workOrder");
-        DayBooking dayBooking = new DayBooking(LocalDate.of(2018, 1, 1), workOrder, 5D);
-        when(dayBookingRepository.findByDateAndWorkOrderWorkOrder(LocalDate.of(2018, 1, 1), "workOrder")).thenReturn(Optional.of(dayBooking));
-        BookingCreated event = bookingCreated()
-                .date(LocalDate.of(2018, 1, 1))
-                .workorder("workOrder")
-                .hours(5D)
-                .description("desc")
-                .employee("1")
-                .build();
+        Project project = project().build();
+        when(matcher.getProjectsMatchingEvent(event)).thenReturn(singleton(project));
+        DayBooking dayBooking = new DayBooking(LocalDate.of(2018, 1, 1), project.getId(), 5D);
+        when(dayBookingRepository.findByDateAndProjectId(LocalDate.of(2018, 1, 1), project.getId())).thenReturn(Optional.of(dayBooking));
 
         readModel.on(event);
 
@@ -87,9 +74,6 @@ class DayBookingReadModelTest {
 
     @Test
     void onBookingDeleted_bookingsAtDate_subtractsBookingHours() {
-        WorkOrder workOrder = new WorkOrder("workOrder");
-        DayBooking dayBooking = new DayBooking(LocalDate.of(2018, 1, 1), workOrder, 5D);
-        when(dayBookingRepository.findByDateAndWorkOrderWorkOrder(LocalDate.of(2018, 1, 1), "workOrder")).thenReturn(Optional.of(dayBooking));
         BookingDeleted event = bookingDeleted()
                 .date(LocalDate.of(2018, 1, 1))
                 .workorder("workOrder")
@@ -97,6 +81,10 @@ class DayBookingReadModelTest {
                 .description("desc")
                 .employee("1")
                 .build();
+        Project project = project().build();
+        when(matcher.getProjectsMatchingEvent(event)).thenReturn(singleton(project));
+        DayBooking dayBooking = new DayBooking(LocalDate.of(2018, 1, 1), project.getId(), 5D);
+        when(dayBookingRepository.findByDateAndProjectId(LocalDate.of(2018, 1, 1), project.getId())).thenReturn(Optional.of(dayBooking));
 
         readModel.on(event);
 
@@ -105,7 +93,6 @@ class DayBookingReadModelTest {
 
     @Test
     void onBookingDeleted_noBookingsAtDate_doesNothing() {
-        when(dayBookingRepository.findByDateAndWorkOrderWorkOrder(LocalDate.of(2018, 1, 1), "workOrder")).thenReturn(Optional.empty());
         BookingDeleted event = bookingDeleted()
                 .date(LocalDate.of(2018, 1, 1))
                 .workorder("workOrder")
@@ -113,6 +100,9 @@ class DayBookingReadModelTest {
                 .description("desc")
                 .employee("1")
                 .build();
+        Project project = project().build();
+        when(matcher.getProjectsMatchingEvent(event)).thenReturn(singleton(project));
+        when(dayBookingRepository.findByDateAndProjectId(LocalDate.of(2018, 1, 1), project.getId())).thenReturn(Optional.empty());
 
         readModel.on(event);
 
